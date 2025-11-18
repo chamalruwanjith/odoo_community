@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Purchase Order Form View -->
+    <record id="view_purchase_order_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.vkd.dropship</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add smart button to view linked sale orders -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_linked_sale_orders"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-usd"
+                        attrs="{'invisible': [('linked_sale_order_count', '=', 0)]}">
+                    <field name="linked_sale_order_count" widget="statinfo" string="Linked SOs"/>
+                </button>
+
+                <button name="action_create_sale_order"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-plus-square"
+                        string="Create SO"
+                        attrs="{'invisible': [('state', 'not in', ['draft', 'sent', 'to approve', 'purchase'])]}"/>
+            </xpath>
+
+            <!-- Add dropship quantities group after receipt info -->
+            <xpath expr="//group[@name='reception']" position="after">
+                <group name="dropship_info" string="Dropship Information">
+                    <field name="dropship_quantity_total"/>
+                    <field name="dropship_quantity_reserved"/>
+                    <field name="remaining_quantity"/>
+                </group>
+            </xpath>
+
+            <!-- Add dropship quantities to order lines -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='qty_received']" position="after">
+                <field name="dropship_qty_delivered" optional="show" sum="Total Dropshipped"/>
+                <field name="dropship_qty_reserved" optional="show" sum="Total Reserved"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Purchase Order Line Form View -->
+    <record id="view_purchase_order_line_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">purchase.order.line.form.inherit.vkd.dropship</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_line_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='qty_received']" position="after">
+                <field name="dropship_qty_delivered"/>
+                <field name="dropship_qty_reserved"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

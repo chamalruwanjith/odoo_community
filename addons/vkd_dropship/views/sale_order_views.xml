@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale Order Form View -->
+    <record id="view_order_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.vkd.dropship</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add dropship fields in the header area, after state field -->
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="linked_to_purchase" invisible="1"/>
+            </xpath>
+
+            <!-- Add dropship options group after partner_shipping_id -->
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <group name="dropship_options" string="Dropship Options">
+                    <field name="is_dropship_order"
+                           widget="boolean_toggle"
+                           attrs="{'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
+                    <field name="source_purchase_order_id"
+                           attrs="{
+                               'invisible': [('is_dropship_order', '=', False)],
+                               'readonly': [('state', 'not in', ['draft', 'sent'])]
+                           }"
+                           options="{'no_create': True}"/>
+                </group>
+            </xpath>
+
+            <!-- Add button to view source PO if linked -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_source_purchase_order"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"
+                        attrs="{'invisible': [('source_purchase_order_id', '=', False)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Source</span>
+                        <span class="o_stat_text">PO</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Add is_dropship field to order lines tree view -->
+            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="is_dropship" optional="show"/>
+                <field name="source_purchase_line_id" optional="hide"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Sale Order Line Form View -->
+    <record id="view_order_line_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherit.vkd.dropship</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="is_dropship"/>
+                <field name="source_purchase_line_id"
+                       attrs="{'invisible': [('is_dropship', '=', False)]}"
+                       options="{'no_create': True}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
