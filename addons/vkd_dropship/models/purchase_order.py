@@ -41,13 +41,14 @@ class PurchaseOrder(models.Model):
         for order in self:
             order.linked_sale_order_count = len(order.linked_sale_order_ids)
 
-    @api.depends('order_line.dropship_qty_delivered', 'order_line.dropship_qty_reserved', 'order_line.product_qty')
+    @api.depends('order_line.dropship_qty_delivered', 'order_line.dropship_qty_reserved', 'order_line.product_qty', 'order_line.qty_received')
     def _compute_dropship_quantities(self):
         for order in self:
             order.dropship_quantity_total = sum(order.order_line.mapped('dropship_qty_delivered'))
             order.dropship_quantity_reserved = sum(order.order_line.mapped('dropship_qty_reserved'))
             total_ordered = sum(order.order_line.mapped('product_qty'))
-            order.remaining_quantity = total_ordered - order.dropship_quantity_total - order.qty_received
+            total_received = sum(order.order_line.mapped('qty_received'))
+            order.remaining_quantity = total_ordered - order.dropship_quantity_total - total_received
 
     def action_view_linked_sale_orders(self):
         """

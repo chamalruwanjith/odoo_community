@@ -13,7 +13,7 @@
                         type="object"
                         class="oe_stat_button"
                         icon="fa-usd"
-                        attrs="{'invisible': [('linked_sale_order_count', '=', 0)]}">
+                        invisible="linked_sale_order_count == 0">
                     <field name="linked_sale_order_count" widget="statinfo" string="Linked SOs"/>
                 </button>
 
@@ -22,7 +22,7 @@
                         class="oe_stat_button"
                         icon="fa-plus-square"
                         string="Create SO"
-                        attrs="{'invisible': [('state', 'not in', ['draft', 'sent', 'to approve', 'purchase'])]}"/>
+                        invisible="state not in ['draft', 'sent', 'to approve', 'purchase']"/>
             </xpath>
 
             <!-- Add dropship quantities group after receipt info -->

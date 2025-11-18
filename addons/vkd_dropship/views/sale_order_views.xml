@@ -17,12 +17,10 @@
                 <group name="dropship_options" string="Dropship Options">
                     <field name="is_dropship_order"
                            widget="boolean_toggle"
-                           attrs="{'readonly': [('state', 'not in', ['draft', 'sent'])]}"/>
+                           readonly="state not in ['draft', 'sent']"/>
                     <field name="source_purchase_order_id"
-                           attrs="{
-                               'invisible': [('is_dropship_order', '=', False)],
-                               'readonly': [('state', 'not in', ['draft', 'sent'])]
-                           }"
+                           invisible="not is_dropship_order"
+                           readonly="state not in ['draft', 'sent']"
                            options="{'no_create': True}"/>
                 </group>
             </xpath>
@@ -33,7 +31,7 @@
                         type="object"
                         class="oe_stat_button"
                         icon="fa-shopping-cart"
-                        attrs="{'invisible': [('source_purchase_order_id', '=', False)]}">
+                        invisible="not source_purchase_order_id">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_text">Source</span>
                         <span class="o_stat_text">PO</span>
@@ -60,7 +58,7 @@
             <xpath expr="//field[@name='product_id']" position="after">
                 <field name="is_dropship"/>
                 <field name="source_purchase_line_id"
-                       attrs="{'invisible': [('is_dropship', '=', False)]}"
+                       invisible="not is_dropship"
                        options="{'no_create': True}"/>
             </xpath>
 
