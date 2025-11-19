@@ -73,6 +73,21 @@ class SaleOrder(models.Model):
             'target': 'current',
         }
 
+    def action_confirm(self):
+        """
+        Override to validate that dropship customer is replaced with actual customer
+        """
+        # Check if any SO still has dropship customer
+        for order in self:
+            if order.partner_id.is_dropship_customer:
+                raise UserError(_(
+                    'Cannot confirm Sale Order "%s".\n\n'
+                    'The customer "%s" is marked as a Dropship Customer placeholder.\n'
+                    'Please select the actual customer before confirming this order.'
+                ) % (order.name, order.partner_id.name))
+
+        return super(SaleOrder, self).action_confirm()
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'

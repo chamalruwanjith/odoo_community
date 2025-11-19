@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Partner Form View -->
+    <record id="view_partner_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.vkd.dropship</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add is_dropship_customer field in Sales & Purchase section -->
+            <xpath expr="//page[@name='sales_purchases']//group[@name='sale']" position="inside">
+                <field name="is_dropship_customer"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

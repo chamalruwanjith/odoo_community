@@ -62,16 +62,39 @@ class PurchaseOrder(models.Model):
 
     def action_create_sale_order(self):
         """
-        Action to create a new sale order from this PO
+        Action to create a new sale order from this PO with auto-populated lines
         """
         self.ensure_one()
 
+        # Find the dropship customer (placeholder customer)
+        dropship_customer = self.env['res.partner'].search([
+            ('is_dropship_customer', '=', True)
+        ], limit=1)
+
+        if not dropship_customer:
+            # If no dropship customer exists, use current user's partner
+            dropship_customer = self.env.user.partner_id
+
         # Create a new SO with this PO as source
         sale_order = self.env['sale.order'].create({
-            'partner_id': self.env.user.partner_id.id,  # Default to current user, will be changed
+            'partner_id': dropship_customer.id,
             'source_purchase_order_id': self.id,
             'is_dropship_order': True,
         })
+
+        # Auto-populate SO lines from PO lines (products only)
+        for po_line in self.order_line:
+            # Only add product lines (skip services, consumables if needed)
+            if po_line.product_id and po_line.product_id.detailed_type == 'product':
+                # Create SO line
+                self.env['sale.order.line'].create({
+                    'order_id': sale_order.id,
+                    'product_id': po_line.product_id.id,
+                    'product_uom_qty': po_line.product_qty,
+                    'product_uom': po_line.product_uom.id,
+                    'price_unit': po_line.price_unit,  # You can adjust pricing logic
+                    'source_purchase_line_id': po_line.id,
+                })
 
         # Return action to open the new SO
         return {
