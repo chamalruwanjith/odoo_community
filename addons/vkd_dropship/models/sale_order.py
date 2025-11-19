@@ -156,7 +156,7 @@ class SaleOrderLine(models.Model):
 
             if lines_force_standard:
                 # Process with dropship route temporarily disabled
-                result = self._process_lines_without_dropship_route(lines_force_standard, previous_product_uom_qty)
+                result = lines_force_standard._process_lines_without_dropship_route(previous_product_uom_qty)
 
             # Process remaining lines normally
             lines_normal = lines_to_process - lines_force_standard
