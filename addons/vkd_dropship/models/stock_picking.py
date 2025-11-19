@@ -14,7 +14,7 @@ class StockPicking(models.Model):
     )
     po_dropship_info = fields.Char(
         string='Dropship Info',
-        compute='_compute_has_dropship_from_po',
+        compute='_compute_po_dropship_info',
         help='Information about dropshipped quantities from source PO'
     )
 
@@ -25,15 +25,19 @@ class StockPicking(models.Model):
             if picking.picking_type_code == 'incoming' and picking.purchase_id:
                 po = picking.purchase_id
                 # Check if PO has linked dropship SOs
-                if po.linked_sale_order_ids:
-                    picking.has_dropship_from_po = True
-                    dropship_qty = po.dropship_quantity_total + po.dropship_quantity_reserved
-                    picking.po_dropship_info = f"Dropshipped: {dropship_qty:.2f} (Delivered: {po.dropship_quantity_total:.2f}, Reserved: {po.dropship_quantity_reserved:.2f})"
-                else:
-                    picking.has_dropship_from_po = False
-                    picking.po_dropship_info = False
+                picking.has_dropship_from_po = bool(po.linked_sale_order_ids)
             else:
                 picking.has_dropship_from_po = False
+
+    @api.depends('purchase_id', 'purchase_id.dropship_quantity_total',
+                 'purchase_id.dropship_quantity_reserved', 'has_dropship_from_po')
+    def _compute_po_dropship_info(self):
+        for picking in self:
+            if picking.has_dropship_from_po and picking.purchase_id:
+                po = picking.purchase_id
+                dropship_qty = po.dropship_quantity_total + po.dropship_quantity_reserved
+                picking.po_dropship_info = f"Dropshipped: {dropship_qty:.2f} (Delivered: {po.dropship_quantity_total:.2f}, Reserved: {po.dropship_quantity_reserved:.2f})"
+            else:
                 picking.po_dropship_info = False
 
     def button_validate(self):
