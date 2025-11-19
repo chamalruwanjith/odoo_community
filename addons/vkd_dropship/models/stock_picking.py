@@ -62,8 +62,11 @@ class StockPicking(models.Model):
 
     def _adjust_receipt_for_dropship(self):
         """
-        Adjust receipt quantities to account for dropshipped amounts
-        Prevents unnecessary backorder creation
+        Adjust receipt quantities to account for dropshipped amounts and already received qty
+        Handles:
+        - Initial receipts: Adjust demand from PO qty to exclude dropship
+        - Partial receipts: Support multiple partial shipments
+        - Backorders: Recalculate in case new dropship orders were created
         """
         self.ensure_one()
 
@@ -71,6 +74,7 @@ class StockPicking(models.Model):
             return
 
         po = self.purchase_id
+        is_backorder = bool(self.backorder_id)
 
         # For each move in the receipt
         for move in self.move_ids:
@@ -81,14 +85,28 @@ class StockPicking(models.Model):
             # Get dropshipped quantity for this PO line
             dropship_qty = po_line.dropship_qty_delivered + po_line.dropship_qty_reserved
 
-            # Expected to receive = ordered - dropshipped
-            expected_to_receive = po_line.product_qty - dropship_qty
+            # Get already received quantity (excluding current receipt)
+            received_qty = po_line.qty_received
 
-            # If demand quantity hasn't been manually changed and is still the full PO qty
-            # Adjust it to the expected amount
-            if move.product_uom_qty == po_line.product_qty and dropship_qty > 0:
-                # Update the demand to exclude dropship qty
-                move.product_uom_qty = expected_to_receive
+            # Calculate expected remaining to receive
+            # Formula: Ordered - Dropshipped - Already Received
+            expected_remaining = po_line.product_qty - dropship_qty - received_qty
+
+            # Ensure non-negative
+            if expected_remaining < 0:
+                expected_remaining = 0
+
+            # Adjustment logic based on receipt type
+            if is_backorder:
+                # For backorders: Always recalculate demand
+                # This handles cases where new dropship orders were created after first receipt
+                if move.product_uom_qty != expected_remaining and expected_remaining >= 0:
+                    move.product_uom_qty = expected_remaining
+            else:
+                # For first receipt: Only adjust if demand hasn't been manually changed
+                # Check if demand is still the original PO qty (not user-modified)
+                if move.product_uom_qty == po_line.product_qty and dropship_qty > 0:
+                    move.product_uom_qty = expected_remaining
 
     def _update_po_dropship_quantities(self):
         """
