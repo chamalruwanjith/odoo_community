@@ -143,7 +143,7 @@ class StockMove(models.Model):
 
         return vals
 
-    def _should_bypass_reservation(self):
+    def _should_bypass_reservation(self, location):
         """
         Override to handle backorder logic for receipts with dropship.
         Checks against expected_to_receive instead of product_uom_qty.
@@ -156,9 +156,9 @@ class StockMove(models.Model):
                 quantity_to_split = self.expected_to_receive - self.quantity
                 if quantity_to_split > 0:
                     # Force the split based on expected_to_receive
-                    return super(StockMove, self)._should_bypass_reservation()
+                    return super(StockMove, self)._should_bypass_reservation(location)
 
-        return super(StockMove, self)._should_bypass_reservation()
+        return super(StockMove, self)._should_bypass_reservation(location)
 
     def _action_done(self, cancel_backorder=False):
         """
