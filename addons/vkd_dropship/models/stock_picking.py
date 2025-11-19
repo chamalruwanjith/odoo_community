@@ -63,50 +63,21 @@ class StockPicking(models.Model):
     def _adjust_receipt_for_dropship(self):
         """
         Adjust receipt quantities to account for dropshipped amounts and already received qty
-        Handles:
-        - Initial receipts: Adjust demand from PO qty to exclude dropship
-        - Partial receipts: Support multiple partial shipments
-        - Backorders: Recalculate in case new dropship orders were created
+        No longer adjusts product_uom_qty - instead marks moves for proper backorder calculation
         """
         self.ensure_one()
 
         if not self.purchase_id:
             return
 
-        po = self.purchase_id
-        is_backorder = bool(self.backorder_id)
-
-        # For each move in the receipt
+        # Mark moves with expected_to_receive for backorder logic
         for move in self.move_ids:
             po_line = move.purchase_line_id
             if not po_line:
                 continue
 
-            # Get dropshipped quantity for this PO line
-            dropship_qty = po_line.dropship_qty_delivered + po_line.dropship_qty_reserved
-
-            # Get already received quantity (excluding current receipt)
-            received_qty = po_line.qty_received
-
-            # Calculate expected remaining to receive
-            # Formula: Ordered - Dropshipped - Already Received
-            expected_remaining = po_line.product_qty - dropship_qty - received_qty
-
-            # Ensure non-negative
-            if expected_remaining < 0:
-                expected_remaining = 0
-
-            # Adjustment logic based on receipt type
-            if is_backorder:
-                # For backorders: Always recalculate demand
-                # This handles cases where new dropship orders were created after first receipt
-                if move.product_uom_qty != expected_remaining and expected_remaining >= 0:
-                    move.product_uom_qty = expected_remaining
-            else:
-                # For first receipt: Only adjust if demand hasn't been manually changed
-                # Check if demand is still the original PO qty (not user-modified)
-                if move.product_uom_qty == po_line.product_qty and dropship_qty > 0:
-                    move.product_uom_qty = expected_remaining
+            # Compute expected_to_receive will be used by backorder logic
+            # No need to modify product_uom_qty here
 
     def _update_po_dropship_quantities(self):
         """
@@ -137,21 +108,75 @@ class StockMove(models.Model):
     )
 
     @api.depends('purchase_line_id', 'purchase_line_id.dropship_qty_delivered',
-                 'purchase_line_id.dropship_qty_reserved', 'purchase_line_id.product_qty')
+                 'purchase_line_id.dropship_qty_reserved', 'purchase_line_id.product_qty',
+                 'purchase_line_id.qty_received')
     def _compute_dropship_qty_for_line(self):
         for move in self:
             if move.purchase_line_id:
                 po_line = move.purchase_line_id
-                move.dropship_qty_for_line = po_line.dropship_qty_delivered + po_line.dropship_qty_reserved
-                move.expected_to_receive = po_line.product_qty - move.dropship_qty_for_line
+                dropship_qty = po_line.dropship_qty_delivered + po_line.dropship_qty_reserved
+                # For display: total dropship
+                move.dropship_qty_for_line = dropship_qty
+                # For backorder calculation: expected remaining after dropship and received
+                # Only count already received qty (not including current move)
+                received_qty = po_line.qty_received - move.quantity
+                move.expected_to_receive = po_line.product_qty - dropship_qty - received_qty
             else:
                 move.dropship_qty_for_line = 0
                 move.expected_to_receive = 0
 
+    def _prepare_move_split_vals(self, qty):
+        """
+        Override to use expected_to_receive for backorder calculation on receipts with dropship
+        """
+        vals = super(StockMove, self)._prepare_move_split_vals(qty)
+
+        # Check if this is a receipt from PO with dropship
+        if self.picking_id and self.picking_id.has_dropship_from_po and self.purchase_line_id:
+            # For receipts with dropship, use expected_to_receive instead of product_uom_qty
+            # The backorder should be based on what's actually expected, not the full PO qty
+            if self.expected_to_receive > 0:
+                # Calculate backorder quantity based on expected_to_receive
+                remaining_expected = self.expected_to_receive - self.quantity
+                if remaining_expected > 0:
+                    vals['product_uom_qty'] = remaining_expected
+
+        return vals
+
+    def _should_bypass_reservation(self):
+        """
+        Override to handle backorder logic for receipts with dropship.
+        Checks against expected_to_receive instead of product_uom_qty.
+        """
+        # For receipts from PO with dropship, override backorder check
+        if self.picking_id and self.picking_id.has_dropship_from_po and self.purchase_line_id:
+            # Use expected_to_receive for determining if backorder is needed
+            if self.quantity < self.expected_to_receive:
+                # Split the move: some done, rest to backorder
+                quantity_to_split = self.expected_to_receive - self.quantity
+                if quantity_to_split > 0:
+                    # Force the split based on expected_to_receive
+                    return super(StockMove, self)._should_bypass_reservation()
+
+        return super(StockMove, self)._should_bypass_reservation()
+
     def _action_done(self, cancel_backorder=False):
         """
-        Override to ensure dropship quantities are updated when moves are done
+        Override to:
+        1. Use expected_to_receive for backorder logic on dropship receipts
+        2. Update dropship quantities when dropship moves are done
         """
+        # For receipts with dropship, adjust backorder logic
+        for move in self:
+            if move.picking_id and move.picking_id.has_dropship_from_po and move.purchase_line_id:
+                # Override product_uom_qty temporarily for backorder calculation
+                if move.expected_to_receive > 0:
+                    # Store original
+                    original_uom_qty = move.product_uom_qty
+                    # Set to expected for backorder logic
+                    move.product_uom_qty = move.expected_to_receive
+                    # This will be used by the split logic in _action_done
+
         res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
 
         # Update dropship quantities for dropship moves
