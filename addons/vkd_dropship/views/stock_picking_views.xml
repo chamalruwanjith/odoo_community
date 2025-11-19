@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Stock Picking (Receipt) Form View -->
+    <record id="view_picking_form_inherit_vkd_dropship" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.vkd.dropship</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add dropship info alert for receipts with dropship from PO -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-info text-center" role="alert"
+                     invisible="not has_dropship_from_po"
+                     style="margin-bottom:0px;">
+                    <strong>Dropship Information:</strong>
+                    <field name="po_dropship_info" readonly="1"/>
+                    <br/>
+                    <span>The demand quantities have been adjusted to account for dropshipped amounts.</span>
+                </div>
+            </xpath>
+
+            <!-- Add hidden field -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="has_dropship_from_po" invisible="1"/>
+            </xpath>
+
+            <!-- Add dropship qty info to move lines for receipts -->
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']" position="after">
+                <field name="dropship_qty_for_line" optional="hide"
+                       column_invisible="parent.picking_type_code != 'incoming'"/>
+                <field name="expected_to_receive" optional="hide"
+                       column_invisible="parent.picking_type_code != 'incoming'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
