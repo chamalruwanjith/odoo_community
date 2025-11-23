@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Product Subtask Template Tree View -->
+    <record id="product_subtask_template_view_tree" model="ir.ui.view">
+        <field name="name">product.subtask.template.view.tree</field>
+        <field name="model">product.subtask.template</field>
+        <field name="arch" type="xml">
+            <tree default_order="product_tmpl_id, sequence">
+                <field name="sequence" widget="handle"/>
+                <field name="name" string="Subtask Name"/>
+                <field name="product_tmpl_id" string="Product"/>
+                <field name="allocated_hours" widget="float_time" sum="Total Hours"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Product Subtask Template Form View -->
+    <record id="product_subtask_template_view_form" model="ir.ui.view">
+        <field name="name">product.subtask.template.view.form</field>
+        <field name="model">product.subtask.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="e.g., Requirements Analysis, Design Review, Testing"/>
+                            <field name="product_tmpl_id"
+                                   domain="[('service_tracking', 'in', ['task_in_project', 'task_global_project'])]"
+                                   options="{'no_create': True}"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="allocated_hours" widget="float_time"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                            <field name="description"
+                                   placeholder="Enter detailed instructions, requirements, or notes for this subtask..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Product Subtask Template Search View -->
+    <record id="product_subtask_template_view_search" model="ir.ui.view">
+        <field name="name">product.subtask.template.view.search</field>
+        <field name="model">product.subtask.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Subtask Name"/>
+                <field name="product_tmpl_id" string="Product"/>
+                <separator/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_product" string="Product"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter name="group_by_company" string="Company"
+                            context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Product Subtask Template Action -->
+    <record id="product_subtask_template_action" model="ir.actions.act_window">
+        <field name="name">Subtask Templates</field>
+        <field name="res_model">product.subtask.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Subtask Template
+            </p>
+            <p>
+                Subtask templates define tasks that will be automatically created
+                as subtasks when a sale order is confirmed and a main task is generated.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item under Sales > Configuration > Products -->
+    <menuitem id="menu_product_subtask_template"
+              name="Subtask Templates"
+              parent="sale.product_menu_catalog"
+              action="product_subtask_template_action"
+              sequence="20"/>
+
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Product Template Form View -->
+    <record id="product_template_form_view_inherit_subtask" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.subtask</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale_project.product_template_form_view_inherit_sale_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Add Subtask Templates page in notebook after Project page -->
+            <xpath expr="//page[@name='project']" position="after">
+                <page name="subtask_templates"
+                      string="Subtask Templates"
+                      invisible="service_tracking not in ['task_in_project', 'task_global_project']">
+                    <group>
+                        <group>
+                            <field name="subtask_template_count" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <field name="subtask_template_ids"
+                           context="{'default_product_tmpl_id': id}">
+                        <tree editable="bottom" default_order="sequence">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name" required="1"/>
+                            <field name="allocated_hours"
+                                   sum="Total Hours"
+                                   widget="float_time"/>
+                            <field name="description" optional="hide"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="name" required="1"/>
+                                        <field name="sequence"/>
+                                        <field name="allocated_hours" widget="float_time"/>
+                                        <field name="active"/>
+                                    </group>
+                                    <group>
+                                        <field name="product_tmpl_id" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                    </group>
+                                </group>
+                                <group string="Description">
+                                    <field name="description" nolabel="1"
+                                           placeholder="Enter detailed instructions or requirements for this subtask..."/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+
+                    <div class="alert alert-info" role="alert">
+                        <strong>ℹ️ How Subtask Templates Work:</strong>
+                        <ul>
+                            <li>When a Sale Order is confirmed, tasks are created for products with service tracking enabled.</li>
+                            <li>Subtasks defined here will be automatically created under the main task.</li>
+                            <li>Each subtask inherits the project, customer, and sale order from the parent task.</li>
+                            <li>Use <strong>Sequence</strong> to control the order of subtasks.</li>
+                            <li>Subtasks are hidden from the project board by default and only visible within the parent task.</li>
+                        </ul>
+                    </div>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
