@@ -102,24 +102,28 @@ class StockMove(models.Model):
     def _action_done(self, cancel_backorder=False):
         """
         Override to:
-        1. Use expected_to_receive for backorder logic on receipts with dropship
+        1. Use expected_to_receive for backorder logic on INCOMING receipts with dropship
         2. Update dropship quantities when dropship moves are done
+
+        IMPORTANT: Only affects incoming receipts, NOT dropship pickings (supplier->customer)
         """
-        # For receipts with dropship, temporarily set product_uom_qty to expected_to_receive
+        # For INCOMING receipts with dropship, temporarily set product_uom_qty to expected_to_receive
         # This makes backorder calculation use the correct expected quantity
-        moves_with_dropship = self.env['stock.move']
+        # Only for receipts going to company locations, NOT for dropship moves
         for move in self:
-            if (move.picking_id and move.picking_id.has_dropship_from_po and
-                move.purchase_line_id and move.expected_to_receive > 0):
-                # Store original for potential restore
-                move.with_context(original_uom_qty=move.product_uom_qty)
-                # Set to expected for backorder calculation
+            # Check: Must be incoming receipt (to company location), NOT dropship (to customer)
+            if (move.picking_id and
+                move.picking_id.picking_type_code == 'incoming' and
+                move.picking_id.has_dropship_from_po and
+                move.purchase_line_id and
+                move.expected_to_receive > 0 and
+                move.location_dest_id.usage == 'internal'):  # Going to warehouse, not customer
+                # Temporarily set demand to expected qty for backorder calculation
                 move.product_uom_qty = move.expected_to_receive
-                moves_with_dropship |= move
 
         res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
 
-        # Update dropship quantities for dropship moves
+        # Update dropship quantities for dropship moves (supplier -> customer)
         dropship_moves = self.filtered(
             lambda m: m.location_id.usage == 'supplier' and m.location_dest_id.usage == 'customer'
         )
