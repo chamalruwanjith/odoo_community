@@ -284,6 +284,15 @@ class SaleOrderLine(models.Model):
             'purchase_line_id': matching_po_line.id,
             'origin': self.order_id.name,
         }
-        self.env['stock.move'].create(move_vals)
+        move = self.env['stock.move'].create(move_vals)
+
+        # Confirm the move to make quantity visible in picking form
+        # This creates move_line_ids which are needed for the UI
+        if move.state == 'draft':
+            move._action_confirm()
+
+        # Ensure picking is in correct state
+        if picking.state == 'draft':
+            picking.action_confirm()
 
         return picking

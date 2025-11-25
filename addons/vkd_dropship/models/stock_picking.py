@@ -101,26 +101,10 @@ class StockMove(models.Model):
 
     def _action_done(self, cancel_backorder=False):
         """
-        Override to:
-        1. Use expected_to_receive for backorder logic on INCOMING receipts with dropship
-        2. Update dropship quantities when dropship moves are done
+        Override to update dropship quantities when dropship moves are done
 
-        IMPORTANT: Only affects incoming receipts, NOT dropship pickings (supplier->customer)
+        IMPORTANT: Does NOT modify product_uom_qty. Backorder logic handled in _split()
         """
-        # For INCOMING receipts with dropship, temporarily set product_uom_qty to expected_to_receive
-        # This makes backorder calculation use the correct expected quantity
-        # Only for receipts going to company locations, NOT for dropship moves
-        for move in self:
-            # Check: Must be incoming receipt (to company location), NOT dropship (to customer)
-            if (move.picking_id and
-                move.picking_id.picking_type_code == 'incoming' and
-                move.picking_id.has_dropship_from_po and
-                move.purchase_line_id and
-                move.expected_to_receive > 0 and
-                move.location_dest_id.usage == 'internal'):  # Going to warehouse, not customer
-                # Temporarily set demand to expected qty for backorder calculation
-                move.product_uom_qty = move.expected_to_receive
-
         res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
 
         # Update dropship quantities for dropship moves (supplier -> customer)
@@ -134,3 +118,42 @@ class StockMove(models.Model):
                 po_lines._compute_dropship_quantities()
 
         return res
+
+    def _split(self, qty, restrict_partner_id=False):
+        """
+        Override to use expected_to_receive for backorder calculation on incoming receipts with dropship
+
+        Standard logic: Split if quantity < product_uom_qty
+        Custom logic: For receipts with dropship, split if quantity < expected_to_receive
+        """
+        # For INCOMING receipts with dropship from PO
+        # Check backorder against expected_to_receive instead of product_uom_qty
+        if (self.picking_id and
+            self.picking_id.picking_type_code == 'incoming' and
+            self.picking_id.has_dropship_from_po and
+            self.purchase_line_id and
+            self.expected_to_receive > 0 and
+            self.location_dest_id.usage == 'internal'):  # Going to warehouse, not customer
+
+            # Calculate remaining based on expected_to_receive
+            remaining_qty = self.expected_to_receive - qty
+
+            if remaining_qty > 0:
+                # Create backorder with remaining quantity based on expected
+                # Temporarily swap product_uom_qty to make split work correctly
+                original_uom_qty = self.product_uom_qty
+                self.product_uom_qty = self.expected_to_receive
+
+                try:
+                    new_move = super(StockMove, self)._split(qty, restrict_partner_id)
+                finally:
+                    # Restore original
+                    self.product_uom_qty = original_uom_qty
+
+                return new_move
+            else:
+                # No backorder needed
+                return self.env['stock.move']
+
+        # Standard flow for all other cases
+        return super(StockMove, self)._split(qty, restrict_partner_id)
