@@ -101,10 +101,46 @@ class StockMove(models.Model):
 
     def _action_done(self, cancel_backorder=False):
         """
-        Override to update dropship quantities when dropship moves are done
+        Override to:
+        1. Validate quantity doesn't exceed expected_to_receive for incoming receipts with dropship
+        2. Update dropship quantities when dropship moves are done
 
         IMPORTANT: Does NOT modify product_uom_qty. Backorder logic handled in _split()
         """
+        # Validate quantity for incoming receipts with dropship from PO
+        for move in self:
+            if (move.picking_id and
+                move.picking_id.picking_type_code == 'incoming' and
+                move.picking_id.has_dropship_from_po and
+                move.purchase_line_id and
+                move.location_dest_id.usage == 'internal'):
+
+                if move.expected_to_receive > 0 and move.quantity > move.expected_to_receive:
+                    from odoo.exceptions import UserError
+                    raise UserError(_(
+                        'Cannot receive more than expected quantity!\n\n'
+                        'Product: %s\n'
+                        'Expected to receive: %s %s\n'
+                        'Trying to receive: %s %s\n\n'
+                        'This PO has linked dropship orders. The expected quantity accounts for:\n'
+                        '- Ordered: %s\n'
+                        '- Dropshipped: %s (Delivered: %s, Reserved: %s)\n'
+                        '- Already received: %s\n'
+                        '- Remaining to receive: %s'
+                    ) % (
+                        move.product_id.display_name,
+                        move.expected_to_receive,
+                        move.product_uom.name,
+                        move.quantity,
+                        move.product_uom.name,
+                        move.purchase_line_id.product_qty,
+                        move.dropship_qty_for_line,
+                        move.purchase_line_id.dropship_qty_delivered,
+                        move.purchase_line_id.dropship_qty_reserved,
+                        move.purchase_line_id.qty_received - move.quantity,
+                        move.expected_to_receive,
+                    ))
+
         res = super(StockMove, self)._action_done(cancel_backorder=cancel_backorder)
 
         # Update dropship quantities for dropship moves (supplier -> customer)
