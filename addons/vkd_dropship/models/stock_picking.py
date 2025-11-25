@@ -66,6 +66,59 @@ class StockPicking(models.Model):
         if purchase_orders:
             purchase_orders.mapped('order_line')._compute_dropship_quantities()
 
+    def _check_backorder(self):
+        """
+        Override to check backorder with expected_to_receive for incoming receipts with dropship
+
+        For incoming receipts from PO with linked dropship orders:
+        - Check if picked quantity < expected_to_receive (instead of < product_uom_qty)
+
+        For all other pickings:
+        - Use standard backorder logic
+        """
+        from odoo.tools import float_compare
+
+        prec = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        backorder_pickings = self.browse()
+
+        for picking in self:
+            if picking.picking_type_id.create_backorder != 'ask':
+                continue
+
+            # Check if this is an incoming receipt with dropship from PO
+            if picking.picking_type_code == 'incoming' and picking.has_dropship_from_po:
+                # Use expected_to_receive for backorder check
+                for move in picking.move_ids:
+                    if move.state == 'cancel':
+                        continue
+
+                    # For moves with dropship, check against expected_to_receive
+                    if (move.purchase_line_id and
+                        move.expected_to_receive > 0 and
+                        move.location_dest_id.usage == 'internal'):
+
+                        if (not move.picked or
+                            float_compare(move._get_picked_quantity(), move.expected_to_receive, precision_digits=prec) < 0):
+                            backorder_pickings |= picking
+                            break
+                    else:
+                        # No dropship, use standard logic for this move
+                        if ((move.product_uom_qty and not move.picked) or
+                            float_compare(move._get_picked_quantity(), move.product_uom_qty, precision_digits=prec) < 0):
+                            backorder_pickings |= picking
+                            break
+            else:
+                # Standard backorder check for all other pickings
+                if any(
+                    (move.product_uom_qty and not move.picked) or
+                    float_compare(move._get_picked_quantity(), move.product_uom_qty, precision_digits=prec) < 0
+                    for move in picking.move_ids
+                    if move.state != 'cancel'
+                ):
+                    backorder_pickings |= picking
+
+        return backorder_pickings
+
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
@@ -105,7 +158,7 @@ class StockMove(models.Model):
         1. Validate quantity doesn't exceed expected_to_receive for incoming receipts with dropship
         2. Update dropship quantities when dropship moves are done
 
-        IMPORTANT: Does NOT modify product_uom_qty. Backorder logic handled in _split()
+        IMPORTANT: Backorder logic handled in StockPicking._check_backorder()
         """
         # Validate quantity for incoming receipts with dropship from PO
         for move in self:
@@ -154,42 +207,3 @@ class StockMove(models.Model):
                 po_lines._compute_dropship_quantities()
 
         return res
-
-    def _split(self, qty, restrict_partner_id=False):
-        """
-        Override to use expected_to_receive for backorder calculation on incoming receipts with dropship
-
-        Standard logic: Split if quantity < product_uom_qty
-        Custom logic: For receipts with dropship, split if quantity < expected_to_receive
-        """
-        # For INCOMING receipts with dropship from PO
-        # Check backorder against expected_to_receive instead of product_uom_qty
-        if (self.picking_id and
-            self.picking_id.picking_type_code == 'incoming' and
-            self.picking_id.has_dropship_from_po and
-            self.purchase_line_id and
-            self.expected_to_receive > 0 and
-            self.location_dest_id.usage == 'internal'):  # Going to warehouse, not customer
-
-            # Calculate remaining based on expected_to_receive
-            remaining_qty = self.expected_to_receive - qty
-
-            if remaining_qty > 0:
-                # Create backorder with remaining quantity based on expected
-                # Temporarily swap product_uom_qty to make split work correctly
-                original_uom_qty = self.product_uom_qty
-                self.product_uom_qty = self.expected_to_receive
-
-                try:
-                    new_move = super(StockMove, self)._split(qty, restrict_partner_id)
-                finally:
-                    # Restore original
-                    self.product_uom_qty = original_uom_qty
-
-                return new_move
-            else:
-                # No backorder needed
-                return self.env['stock.move']
-
-        # Standard flow for all other cases
-        return super(StockMove, self)._split(qty, restrict_partner_id)
