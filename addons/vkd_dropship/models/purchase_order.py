@@ -75,12 +75,25 @@ class PurchaseOrder(models.Model):
             # If no dropship customer exists, use current user's partner
             dropship_customer = self.env.user.partner_id
 
-        # Create a new SO with this PO as source
-        sale_order = self.env['sale.order'].create({
+        # Prepare SO values
+        so_vals = {
             'partner_id': dropship_customer.id,
             'source_purchase_order_id': self.id,
             'is_dropship_order': True,
-        })
+        }
+
+        # Add transporter details from PO if vkd_fuel_transporter is installed
+        if hasattr(self, 'transporter_id'):
+            so_vals.update({
+                'transporter_id': self.transporter_id.id if self.transporter_id else False,
+                'transporter_vehicle_id': self.transporter_vehicle_id.id if self.transporter_vehicle_id else False,
+                'trailer_1_id': self.trailer_1_id.id if self.trailer_1_id else False,
+                'trailer_2_id': self.trailer_2_id.id if self.trailer_2_id else False,
+                'trailer_3_id': self.trailer_3_id.id if self.trailer_3_id else False,
+            })
+
+        # Create a new SO with this PO as source
+        sale_order = self.env['sale.order'].create(so_vals)
 
         # Auto-populate SO lines from PO lines (products only)
         for po_line in self.order_line:
@@ -95,10 +108,6 @@ class PurchaseOrder(models.Model):
                     'price_unit': po_line.price_unit,  # You can adjust pricing logic
                     'source_purchase_line_id': po_line.id,
                 })
-
-        # Copy transporter and vehicle details from PO to SO (if vkd_fuel_transporter is installed)
-        if hasattr(sale_order, 'copy_transporter_from_purchase'):
-            sale_order.copy_transporter_from_purchase(self)
 
         # Return action to open the new SO
         return {
