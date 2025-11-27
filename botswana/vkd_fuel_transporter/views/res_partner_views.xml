@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.view_res_partner_filter</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="after">
+                <h2>
+                    <label for="is_transporter"/>
+                    <field name="is_transporter" widget="boolean_toggle"/>
+                </h2>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_transporter_vehicles"
+                        icon="fa-truck" invisible="not is_transporter or transporter_vehicle_count == 0">
+                    <field string="Vehicles" name="transporter_vehicle_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//group[@name='sale']" position="inside">
+                <field name="product_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_tree" model="ir.ui.view">
+        <field name="name">res.partner.view.list.inherit.vkd_fuel_transporter</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="is_transporter" optional="hide"/>
+                <field name="transporter_vehicle_count" string="Vehicles" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="name">res.partner.view.search.inherit.view_partner_tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Transporters" name="transporter" domain="[('is_transporter', '=', True)]"/>
+                <filter string="Transporters with Vehicles" name="transporter_with_vehicles" 
+                        domain="[('is_transporter', '=', True), ('transporter_vehicle_count', '>', 0)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

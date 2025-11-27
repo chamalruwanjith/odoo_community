@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_loading_plan_sasol">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2 class="text-center">LOADING PLAN - SASOL</h2>
+                <br/>
+                
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Reference:</strong> <span t-field="o.name"/><br/>
+                        <strong>Purchase Order:</strong> <span t-field="o.purchase_order_id.name"/><br/>
+                        <strong>Supplier:</strong> <span t-field="o.partner_id.name"/><br/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Loading Date &amp; Time:</strong> <span t-field="o.loading_date_time"/><br/>
+                        <strong>Status:</strong> <span t-field="o.state"/><br/>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Company Information</h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td width="30%"><strong>Company (NCI Botswana)</strong></td>
+                        <td width="70%"><span t-field="o.sasol_company"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vivo ref</strong></td>
+                        <td><span t-field="o.sasol_vivo_ref"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Order Number</strong></td>
+                        <td><span t-field="o.sasol_customer_order_no"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Driver &amp; Transport Information</h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td width="30%"><strong>Driver Name</strong></td>
+                        <td width="70%"><span t-field="o.driver_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Contact Number</strong></td>
+                        <td><span t-field="o.sasol_contact_number"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Carrier Code</strong></td>
+                        <td><span t-field="o.sasol_carrier_code"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transporter</strong></td>
+                        <td><span t-field="o.transporter_id"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Vehicle Information</h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td width="30%"><strong>Trailer reg number</strong></td>
+                        <td width="70%"><span t-field="o.transporter_vehicle_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Horse Registration</strong></td>
+                        <td><span t-field="o.trailer_1_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mode of transport</strong></td>
+                        <td><span t-field="o.sasol_mode_transport"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Order Information</h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td width="30%"><strong>PO Number</strong></td>
+                        <td width="70%"><span t-field="o.po_number"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>NCI Border Post</strong></td>
+                        <td><span t-field="o.destination"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Product Information</h4>
+                <table class="table table-sm table-bordered">
+                    <tr>
+                        <td width="30%"><strong>Material (Product)</strong></td>
+                        <td width="70%"><span t-field="o.sasol_material_product"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quantity in L20</strong></td>
+                        <td><span t-field="o.sasol_quantity_l20"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quantity (Divided by 1000)</strong></td>
+                        <td><span t-field="o.sasol_quantity_display"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sales Unit</strong></td>
+                        <td><span t-field="o.sasol_sales_unit"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Capacity</strong></td>
+                        <td><span t-field="o.total_compartments"/> (Sum of all compartments)</td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Compartments</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Comp 1</th>
+                            <th>Comp 2</th>
+                            <th>Comp 3</th>
+                            <th>Comp 4</th>
+                            <th>Comp 5</th>
+                            <th>Comp 6</th>
+                            <th>Comp 7</th>
+                            <th>Comp 8</th>
+                            <th>Comp 9</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <td><span t-field="o.compartment_1"/></td>
+                            <td><span t-field="o.compartment_2"/></td>
+                            <td><span t-field="o.compartment_3"/></td>
+                            <td><span t-field="o.compartment_4"/></td>
+                            <td><span t-field="o.compartment_5"/></td>
+                            <td><span t-field="o.compartment_6"/></td>
+                            <td><span t-field="o.compartment_7"/></td>
+                            <td><span t-field="o.compartment_8"/></td>
+                            <td><span t-field="o.compartment_9"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-center">
+                            <td colspan="8" class="text-right"><strong>Total:</strong></td>
+                            <td><strong><span t-field="o.total_compartments"/></strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

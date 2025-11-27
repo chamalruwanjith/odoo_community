@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="res_partner_dropship_customer" model="res.partner">
+            <field name="name">Dropship Customer</field>
+            <field name="is_dropship_customer" eval="True"/>
+            <field name="company_type">company</field>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="active" eval="True"/>
+            <field name="comment">This is a placeholder customer for dropship orders created from Purchase Orders.
+Replace with actual customer before confirming the Sale Order.</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Loading Plan Form View - Inherit -->
+    <record id="loading_plan_form_inherit_transporter" model="ir.ui.view">
+        <field name="name">loading.plan.form.inherit.transporter</field>
+        <field name="model">loading.plan</field>
+        <field name="inherit_id" ref="vkd_loading_plan.view_loading_plan_form"/>
+        <field name="arch" type="xml">
+            <!-- Replace transport_company with transporter_id -->
+            <xpath expr="//field[@name='transport_company']" position="replace">
+                <field name="transporter_id" options="{'no_create': True}"/>
+            </xpath>
+            
+            <!-- Replace horse_registration with transporter_vehicle_id -->
+            <xpath expr="//field[@name='horse_registration']" position="replace">
+                <field name="transporter_vehicle_id"/>
+            </xpath>
+            
+            <!-- Replace trailer fields with new Many2one fields -->
+            <xpath expr="//field[@name='trailer_registration']" position="replace">
+                <field name="trailer_1_id"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='trailer_registration_2']" position="replace">
+                <field name="trailer_2_id" invisible="not trailer_1_id"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='trailer_registration_3']" position="replace">
+                <field name="trailer_3_id" invisible="not trailer_2_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

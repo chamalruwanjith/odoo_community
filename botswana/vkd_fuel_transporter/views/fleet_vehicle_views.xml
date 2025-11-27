@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_vehicle_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.form.inherit.vkd_fuel_transporter</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='driver_id']" position="after">
+                <field name="transporter_id" options="{'no_create': True}"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Trailers">
+                    <group>
+                        <group string="Linked Trailers">
+                            <field name="trailer_1_id"/>
+                            <field name="trailer_2_id"/>
+                            <field name="trailer_3_id"/>
+                        </group>
+                        <group string="Trailer Summary">
+                            <field name="trailer_count"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info mt-3" role="alert">
+                        <p><strong>Trailer Management:</strong></p>
+                        <ul>
+                            <li>Link up to 3 trailers to this vehicle</li>
+                            <li>Trailers will automatically populate when this vehicle is selected in transactions</li>
+                            <li>Same trailer cannot be linked multiple times to one vehicle</li>
+                        </ul>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.list.inherit.vkd_fuel_transporter</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='license_plate']" position="after">
+                <field name="transporter_id" optional="show"/>
+                <field name="trailer_count" string="# Trailers" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.search.inherit.vkd_fuel_transporter</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="transporter_id"/>
+                <filter string="Has Transporter" name="has_transporter" domain="[('transporter_id', '!=', False)]"/>
+                <filter string="No Transporter" name="no_transporter" domain="[('transporter_id', '=', False)]"/>
+                <filter string="With Trailers" name="with_trailers" domain="[('trailer_count', '>', 0)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Transporter" name="group_transporter" context="{'group_by': 'transporter_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

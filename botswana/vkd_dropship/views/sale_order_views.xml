@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit.vkd_dropship</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="linked_to_purchase" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//group[@name='order_details']" position="after">
+                <group name="dropship_options" string="Dropship Options">
+                    <field name="is_dropship_order"
+                           widget="boolean_toggle"
+                           readonly="state not in ['draft', 'sent'] or source_purchase_order_id"/>
+                    <field name="source_purchase_order_id"
+                           invisible="not is_dropship_order"
+                           readonly="state not in ['draft', 'sent'] or source_purchase_order_id"
+                           options="{'no_create': True}"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_source_purchase_order"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-shopping-cart"
+                        invisible="not source_purchase_order_id">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Source</span>
+                        <span class="o_stat_text">PO</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

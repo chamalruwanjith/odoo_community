@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Item for Fleet Trailers -->
+    <menuitem id="menu_fleet_trailer"
+              name="Trailers"
+              parent="fleet.menu_root"
+              action="fleet_trailer_action"
+              sequence="15"/>
+</odoo>

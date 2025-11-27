@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_loading_plan_root" name="Loading Plans" sequence="10"
+              web_icon="vkd_loading_plan,static/description/icon.png"/>
+
+    <menuitem id="menu_loading_plan" name="Loading Plans" parent="menu_loading_plan_root"
+              action="action_loading_plan" sequence="10"/>
+
+    <menuitem id="menu_loading_plan_report"
+              name="Loading Plan Report"
+              parent="menu_loading_plan_root"
+              action="action_loading_plan_report"
+              sequence="20"/>
+</odoo>

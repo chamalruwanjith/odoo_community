@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- list View -->
+    <record id="view_loading_plan_list" model="ir.ui.view">
+        <field name="name">loading.plan.list</field>
+        <field name="model">loading.plan</field>
+        <field name="arch" type="xml">
+            <list string="Loading Plans">
+                <field name="name"/>
+                <field name="purchase_order_id"/>
+                <field name="partner_id"/>
+                <field name="supplier_type"/>
+                <field name="loading_date_time"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_loading_plan_form" model="ir.ui.view">
+        <field name="name">loading.plan.form</field>
+        <field name="model">loading.plan</field>
+        <field name="arch" type="xml">
+            <form string="Loading Plan">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_done" string="Mark as Done" type="object"
+                            invisible="state != 'confirmed'" class="oe_highlight"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ['done', 'cancel']"/>
+                    <button name="action_draft" string="Set to Draft" type="object"
+                            invisible="state != 'cancel'"/>
+                    <button name="action_print_loading_plan" string="Print" type="object"
+                            class="oe_highlight" icon="fa-print"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="purchase_order_id"/>
+                            <field name="partner_id"/>
+                            <field name="supplier_type"/>
+                        </group>
+                        <group>
+                            <field name="loading_date_time" placeholder="Date" options="{'show_time': false}"/>
+<!--                            <field name="loading_date_time" invisible="supplier_type == 'puma'"/>-->
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- NAMCOR Template -->
+                        <page string="Loading Plan" name="namcor_plan" invisible="supplier_type != 'namcor'">
+                            <group string="Transport Information">
+                                <group>
+                                    <field name="transporter_id" string="Transport Company"/>
+                                    <field name="transporter_vehicle_id" string="Horse registration"/>
+                                    <field name="trailer_1_id"/>
+                                    <field name="trailer_2_id"/>
+                                    <field name="trailer_3_id"/>
+                                </group>
+                                <group>
+                                    <field name="driver_id"/>
+                                    <field name="passport_no"/>
+                                </group>
+                            </group>
+                            <group string="Order Information">
+                                <group>
+                                    <field name="po_number" string="Purchase Order No."/>
+                                    <field name="supplier_ref" string="Supplier Ref"/>
+                                    <field name="contact_person"/>
+<!--                                    <field name="company_id"/>-->
+                                </group>
+                                <group>
+                                    <field name="namcor_loading_time"/>
+                                    <field name="namcor_loaded"/>
+                                </group>
+                            </group>
+                            <group string="Product Information">
+                                <group>
+                                    <field name="product_ulp_qty"/>
+                                </group>
+                                <group>
+                                    <field name="product_d50_qty"/>
+                                </group>
+                            </group>
+                            <group string="Compartments">
+                                <group>
+                                    <field name="compartment_1"/>
+                                    <field name="compartment_2"/>
+                                    <field name="compartment_3"/>
+                                    <field name="compartment_4"/>
+                                    <field name="compartment_5"/>
+                                </group>
+                                <group>
+                                    <field name="compartment_6"/>
+                                    <field name="compartment_7"/>
+                                    <field name="compartment_8"/>
+                                    <field name="compartment_9"/>
+                                    <field name="total_compartments"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- PUMA ENERGY Template -->
+                        <page string="Loading Plan" name="puma_plan" invisible="supplier_type != 'puma'">
+                            <group string="Transport Information">
+                                <group>
+                                    <field name="transporter_id" string="Transport company"/>
+                                    <field name="transporter_vehicle_id"/>
+                                    <field name="trailer_1_id"/>
+                                    <field name="trailer_2_id"/>
+                                    <field name="trailer_3_id"/>
+                                </group>
+                                <group>
+                                    <field name="driver_id"/>
+                                </group>
+                            </group>
+                            <group string="Order Information">
+                                <group>
+                                    <field name="po_number" string="PO.# &amp; Trade no."/>
+                                    <field name="puma_epuma_order_no"/>
+                                    <field name="puma_epuma_load_code"/>
+                                    <field name="contact_person"/>
+                                    <field name="puma_status"/>
+                                    <field name="destination"/>
+                                </group>
+                                <group>
+                                    <field name="destination"/>
+                                    <field name="puma_order_volumes"/>
+                                </group>
+                            </group>
+                            <group string="Product Information">
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="product_ulp_qty"/>
+                                </group>
+                                <group>
+                                    <field name="product_d50_qty"/>
+                                </group>
+                            </group>
+                            <group string="Compartments">
+                                <group>
+                                    <field name="compartment_1"/>
+                                    <field name="compartment_2"/>
+                                    <field name="compartment_3"/>
+                                    <field name="compartment_4"/>
+                                    <field name="compartment_5"/>
+                                </group>
+                                <group>
+                                    <field name="compartment_6"/>
+                                    <field name="compartment_7"/>
+                                    <field name="compartment_8"/>
+                                    <field name="compartment_9"/>
+                                    <field name="total_compartments"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- VIVO Template -->
+                        <page string="Loading Plan" name="vivo_plan" invisible="supplier_type != 'vivo'">
+                            <group string="Customer Information">
+                                <group>
+                                    <field name="vivo_customer_sold_acc"/>
+                                    <field name="vivo_customer_ship_acc"/>
+                                    <field name="destination" string="Delivery Address"/>
+                                    <field name="border_post"/>
+                                    <field name="vivo_cpl_order_no"/>
+                                </group>
+                                <group>
+                                    <field name="transporter_id"/>
+                                    <field name="driver_id"/>
+                                    <field name="transporter_vehicle_id"/>
+                                    <field name="trailer_1_id"/>
+                                    <field name="trailer_2_id"/>
+                                    <field name="trailer_3_id"/>
+                                </group>
+                            </group>
+
+                            <group string="Order Information">
+                                <group>
+                                    <field name="po_number"/>
+                                </group>
+                            </group>
+                            <group string="Product Information">
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="total_cost"/>
+                                </group>
+                            </group>
+                            <group string="Compartments">
+                                <group>
+                                    <field name="compartment_1"/>
+                                    <field name="compartment_2"/>
+                                    <field name="compartment_3"/>
+                                    <field name="compartment_4"/>
+                                    <field name="compartment_5"/>
+                                </group>
+                                <group>
+                                    <field name="compartment_6"/>
+                                    <field name="compartment_7"/>
+                                    <field name="compartment_8"/>
+                                    <field name="compartment_9"/>
+                                    <field name="total_compartments"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- SASOL Template -->
+                        <page string="Loading Plan" name="sasol_plan" invisible="supplier_type != 'sasol'">
+                            <group string="Transporter Information">
+                                <group>
+                                    <field name="sasol_sold_to_party"/>
+                                    <field name="sasol_ship_to_party"/>
+                                    <field name="sasol_consignee"/>
+                                    <field name="sasol_mode_transport"/>
+                                    <field name="sasol_contact_number"/>
+                                </group>
+                            </group>
+                            <group string="Driver &amp; Contact Information">
+                                <group>
+                                    <field name="driver_id"/>
+                                </group>
+                                <group>
+                                    <field name="sasol_carrier_code"/>
+                                    <field name="border_post"/>
+                                    <field name="sasol_plant"/>
+                                </group>
+                            </group>
+
+                            <group string="Order Information">
+                                <group>
+                                    <field name="po_number"/>
+                                </group>
+                            </group>
+                            <group string="Product Information">
+                                <group>
+                                    <field name="product_id"/>
+                                    <field name="sasol_quantity_l20"/>
+                                </group>
+                                <group>
+                                    <field name="sasol_sales_unit"/>
+                                    <field name="total_compartments"/>
+                                </group>
+                            </group>
+                            <group string="Compartments">
+                                <group>
+                                    <field name="compartment_1"/>
+                                    <field name="compartment_2"/>
+                                    <field name="compartment_3"/>
+                                    <field name="compartment_4"/>
+                                    <field name="compartment_5"/>
+                                </group>
+                                <group>
+                                    <field name="compartment_6"/>
+                                    <field name="compartment_7"/>
+                                    <field name="compartment_8"/>
+                                    <field name="compartment_9"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- STANDARD / DEFAULT Template -->
+                        <page string="Loading Plan" name="standard_plan" invisible="supplier_type not in ['standard', False]">
+                            <group string="Transport Information">
+                                <group>
+                                    <field name="transporter_id"/>
+                                    <field name="transporter_vehicle_id"/>
+                                    <field name="trailer_1_id"/>
+                                    <field name="trailer_2_id"/>
+                                </group>
+                                <group>
+                                    <field name="driver_id"/>
+                                    <field name="passport_no"/>
+                                </group>
+                            </group>
+                            <group string="Order Information">
+                                <group>
+                                    <field name="po_number"/>
+                                    <field name="supplier_ref"/>
+                                    <field name="contact_person"/>
+                                </group>
+                                <group>
+                                    <field name="destination"/>
+                                </group>
+                            </group>
+                            <group string="Product Information">
+                                <group>
+                                    <field name="product_ulp_qty"/>
+                                </group>
+                                <group>
+                                    <field name="product_d50_qty"/>
+                                    <field name="order_quantity"/>
+                                </group>
+                            </group>
+                            <group string="Compartments">
+                                <group>
+                                    <field name="compartment_1"/>
+                                    <field name="compartment_2"/>
+                                    <field name="compartment_3"/>
+                                    <field name="compartment_4"/>
+                                    <field name="compartment_5"/>
+                                </group>
+                                <group>
+                                    <field name="compartment_6"/>
+                                    <field name="compartment_7"/>
+                                    <field name="compartment_8"/>
+                                    <field name="compartment_9"/>
+                                    <field name="total_compartments"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_loading_plan" model="ir.actions.act_window">
+        <field name="name">Loading Plans</field>
+        <field name="res_model">loading.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Loading Plan
+            </p>
+        </field>
+    </record>
+
+    <record id="seq_loading_plan" model="ir.sequence">
+        <field name="name">Loading Plan Sequence</field>
+        <field name="code">loading.plan</field>
+        <field name="prefix">LP/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

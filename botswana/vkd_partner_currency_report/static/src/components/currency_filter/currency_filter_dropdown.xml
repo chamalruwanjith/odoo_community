@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!-- The actual dropdown component for currency filter -->
+    <t t-name="account_reports.AccountReportFilterCurrencies">
+        <Dropdown
+                menuClass="'account_report_filter currency'">
+            <button class="btn btn-secondary">
+                <i class="fa fa-money me-1"/>Currency
+            </button>
+            <t t-set-slot="content">
+                <div class="dropdown-item gap-2 align-items-center">
+                    <label>Currency</label>
+                    <MultiRecordSelector t-props="getMultiRecordSelectorProps('res.currency', 'currency_ids')"/>
+                </div>
+            </t>
+        </Dropdown>
+    </t>
+</templates>

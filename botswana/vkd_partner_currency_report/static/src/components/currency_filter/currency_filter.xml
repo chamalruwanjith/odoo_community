@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="partner_ledger_account_currency_filter.PartnerLedgerFiltersExtended"
+       t-inherit="account_reports.PartnerLedgerFilters"
+       t-inherit-mode="extension">
+        <!-- Add account and currency filters after the partner filter -->
+        <xpath expr="//div[@id='filter_partner']" position="after">
+            <!-- Currency Filter -->
+            <t t-if="'currency_filter' in controller.options">
+                <div id="filter_currency" class="filter_currency">
+                    <t t-call="account_reports.AccountReportFilterCurrencies"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="aged_partner_balance_account_currency_filter.AgedPartnerBalanceFiltersExtended"
+       t-inherit="account_reports.AgedPartnerBalanceFilters"
+       t-inherit-mode="extension">
+        <!-- Add account and currency filters after the partner filter -->
+        <xpath expr="//div[@id='filter_partner']" position="after">
+            <!-- Currency Filter -->
+            <t t-if="'currency_filter' in controller.options">
+                <div id="filter_currency" class="filter_currency">
+                    <t t-call="account_reports.AccountReportFilterCurrencies"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>

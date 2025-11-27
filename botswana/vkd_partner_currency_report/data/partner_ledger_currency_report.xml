@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo auto_sequence="1">
+    <record id="partner_ledger_currency_report" model="account.report">
+        <field name="name">Partner Ledger (Currency Wise)</field>
+        <field name="filter_date_range" eval="True"/>
+        <field name="filter_unfold_all" eval="True"/>
+        <field name="filter_partner" eval="True"/>
+        <field name="filter_currency" eval="True"/>
+        <field name="filter_unfold_all" eval="True"/>
+        <field name="filter_unreconciled" eval="True"/>
+        <field name="filter_period_comparison" eval="False"/>
+        <field name="filter_multi_company">selector</field>
+        <field name="filter_hide_0_lines">never</field>
+        <field name="default_opening_date_filter">this_year</field>
+        <field name="search_bar" eval="True"/>
+        <field name="load_more_limit" eval="80"/>
+        <field name="custom_handler_model_id" ref="model_account_partner_ledger_currency_report_handler"/>
+        <field name="root_report_id" ref="account_reports.partner_ledger_report"/>
+
+        <!-- Columns Definition -->
+        <field name="column_ids">
+            <!-- Journal Code Column -->
+            <record id="partner_ledger_currency_report_journal_code" model="account.report.column">
+                <field name="name">Journal</field>
+                <field name="expression_label">journal_code</field>
+                <field name="figure_type">string</field>
+            </record>
+
+            <!-- Account Code Column -->
+            <record id="partner_ledger_currency_report_account_code" model="account.report.column">
+                <field name="name">Account</field>
+                <field name="expression_label">account_code</field>
+                <field name="figure_type">string</field>
+            </record>
+
+            <!-- Invoice Date Column -->
+            <record id="partner_ledger_currency_report_invoicing_date" model="account.report.column">
+                <field name="name">Invoice Date</field>
+                <field name="expression_label">invoice_date</field>
+                <field name="figure_type">date</field>
+            </record>
+
+            <!-- Due Date Column -->
+            <record id="partner_ledger_currency_report_date_maturity" model="account.report.column">
+                <field name="name">Due Date</field>
+                <field name="expression_label">date_maturity</field>
+                <field name="figure_type">date</field>
+            </record>
+
+            <!-- Matching Number Column -->
+            <record id="partner_ledger_currency_report_matching_number" model="account.report.column">
+                <field name="name">Matching</field>
+                <field name="expression_label">matching_number</field>
+                <field name="figure_type">string</field>
+            </record>
+
+            <!-- CHANGE: Partner Currency Debit Column -->
+            <record id="partner_ledger_currency_report_debit" model="account.report.column">
+                <field name="name">Debit</field>
+                <field name="expression_label">partner_currency_debit</field>
+            </record>
+
+            <!-- CHANGE: Partner Currency Credit Column -->
+            <record id="partner_ledger_currency_report_credit" model="account.report.column">
+                <field name="name">Credit</field>
+                <field name="expression_label">partner_currency_credit</field>
+            </record>
+
+            <!-- CHANGE: Partner Currency Balance Column -->
+            <record id="partner_ledger_currency_report_balance" model="account.report.column">
+                <field name="name">Balance</field>
+                <field name="expression_label">partner_currency_balance</field>
+            </record>
+        </field>
+    </record>
+</odoo>

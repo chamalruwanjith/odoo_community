@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="action_report_loading_plan" model="ir.actions.report">
+        <field name="name">Loading Plan</field>
+        <field name="model">loading.plan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">vkd_loading_plan.report_loading_plan_document</field>
+        <field name="report_file">vkd_loading_plan.report_loading_plan_document</field>
+        <field name="binding_model_id" ref="model_loading_plan"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <template id="report_loading_plan_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- Route to appropriate template based on supplier type -->
+                <t t-if="o.supplier_type == 'namcor'">
+                    <t t-call="vkd_loading_plan.report_loading_plan_namcor"/>
+                </t>
+                <t t-elif="o.supplier_type == 'puma'">
+                    <t t-call="vkd_loading_plan.report_loading_plan_puma"/>
+                </t>
+                <t t-elif="o.supplier_type == 'vivo'">
+                    <t t-call="vkd_loading_plan.report_loading_plan_vivo"/>
+                </t>
+                <t t-elif="o.supplier_type == 'sasol'">
+                    <t t-call="vkd_loading_plan.report_loading_plan_sasol"/>
+                </t>
+                <t t-else="">
+                    <t t-call="vkd_loading_plan.report_loading_plan_standard"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

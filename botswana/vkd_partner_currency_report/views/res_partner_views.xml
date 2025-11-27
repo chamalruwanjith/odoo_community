@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Partner Currency field to partner form -->
+    <record id="view_partner_form_currency" model="ir.ui.view">
+        <field name="name">res.partner.form.currency</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Add currency field in Sales & Purchase section -->
+            <xpath expr="//group[@name='sale']" position="inside">
+                <field name="partner_currency_id" 
+                       options="{'no_create': True}"
+                       groups="base.group_multi_currency"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add Partner Currency field to partner tree view -->
+    <record id="view_partner_tree_currency" model="ir.ui.view">
+        <field name="name">res.partner.tree.currency</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="after">
+                <field name="partner_currency_id" 
+                       optional="hide"
+                       groups="base.group_multi_currency"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add filter for partner currency in partner search view -->
+    <record id="view_res_partner_filter_currency" model="ir.ui.view">
+        <field name="name">res.partner.search.currency</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <separator/>
+                <filter string="Has Partner Currency" 
+                        name="has_partner_currency" 
+                        domain="[('partner_currency_id', '!=', False)]"
+                        groups="base.group_multi_currency"/>
+            </xpath>
+            <xpath expr="//group[@name='group_by']" position="inside">
+                <filter string="Partner Currency" 
+                        name="group_by_currency" 
+                        context="{'group_by': 'partner_currency_id'}"
+                        groups="base.group_multi_currency"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
