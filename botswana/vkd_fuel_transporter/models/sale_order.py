@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
         else:
             if self.transporter_vehicle_id and self.transporter_vehicle_id.transporter_id != self.transporter_id:
                 self.transporter_vehicle_id = False
-    
+
     @api.onchange('transporter_vehicle_id')
     def _onchange_transporter_vehicle_id(self):
         if self.transporter_vehicle_id:
@@ -46,25 +46,23 @@ class SaleOrder(models.Model):
             self.trailer_2_id = False
             self.trailer_3_id = False
 
-    def _prepare_procurement_group_vals(self):
-        """Override to ensure transporter details are available for pickings"""
-        res = super(SaleOrder, self)._prepare_procurement_group_vals()
-        return res
-
     def _action_confirm(self):
-        """Override to copy transporter details to pickings after confirmation"""
-        res = super(SaleOrder, self)._action_confirm()
+        """Override to pass transporter details through context for picking creation"""
+        # Add transporter details to context so pickings can read them during creation
+        ctx = dict(self.env.context or {})
         for order in self:
-            # Copy transporter details to all pickings related to this SO
-            pickings = order.picking_ids
-            for picking in pickings:
-                picking.write({
-                    'transporter_id': order.transporter_id.id if order.transporter_id else False,
-                    'transporter_vehicle_id': order.transporter_vehicle_id.id if order.transporter_vehicle_id else False,
-                    'trailer_1_id': order.trailer_1_id.id if order.trailer_1_id else False,
-                    'trailer_2_id': order.trailer_2_id.id if order.trailer_2_id else False,
-                    'trailer_3_id': order.trailer_3_id.id if order.trailer_3_id else False,
+            if order.transporter_id:
+                ctx.update({
+                    'default_transporter_id': order.transporter_id.id,
+                    'default_transporter_vehicle_id': order.transporter_vehicle_id.id if order.transporter_vehicle_id else False,
+                    'default_trailer_1_id': order.trailer_1_id.id if order.trailer_1_id else False,
+                    'default_trailer_2_id': order.trailer_2_id.id if order.trailer_2_id else False,
+                    'default_trailer_3_id': order.trailer_3_id.id if order.trailer_3_id else False,
                 })
+                break  # Use first order's transporter if multiple orders
+
+        # Call super with updated context
+        res = super(SaleOrder, self.with_context(ctx))._action_confirm()
         return res
 
     def copy_transporter_from_purchase(self, purchase_order):
