@@ -33,3 +33,15 @@ class PurchaseOrder(models.Model):
             self.trailer_1_id = False
             self.trailer_2_id = False
             self.trailer_3_id = False
+
+    def _prepare_picking(self):
+        """Override to copy transporter and vehicle details to pickings"""
+        res = super(PurchaseOrder, self)._prepare_picking()
+        res.update({
+            'transporter_id': self.transporter_id.id if self.transporter_id else False,
+            'transporter_vehicle_id': self.transporter_vehicle_id.id if self.transporter_vehicle_id else False,
+            'trailer_1_id': self.trailer_1_id.id if self.trailer_1_id else False,
+            'trailer_2_id': self.trailer_2_id.id if self.trailer_2_id else False,
+            'trailer_3_id': self.trailer_3_id.id if self.trailer_3_id else False,
+        })
+        return res

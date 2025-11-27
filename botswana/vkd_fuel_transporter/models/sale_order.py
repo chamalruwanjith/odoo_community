@@ -45,3 +45,36 @@ class SaleOrder(models.Model):
             self.trailer_1_id = False
             self.trailer_2_id = False
             self.trailer_3_id = False
+
+    def _prepare_procurement_group_vals(self):
+        """Override to ensure transporter details are available for pickings"""
+        res = super(SaleOrder, self)._prepare_procurement_group_vals()
+        return res
+
+    def _action_confirm(self):
+        """Override to copy transporter details to pickings after confirmation"""
+        res = super(SaleOrder, self)._action_confirm()
+        for order in self:
+            # Copy transporter details to all pickings related to this SO
+            pickings = order.picking_ids
+            for picking in pickings:
+                picking.write({
+                    'transporter_id': order.transporter_id.id if order.transporter_id else False,
+                    'transporter_vehicle_id': order.transporter_vehicle_id.id if order.transporter_vehicle_id else False,
+                    'trailer_1_id': order.trailer_1_id.id if order.trailer_1_id else False,
+                    'trailer_2_id': order.trailer_2_id.id if order.trailer_2_id else False,
+                    'trailer_3_id': order.trailer_3_id.id if order.trailer_3_id else False,
+                })
+        return res
+
+    def copy_transporter_from_purchase(self, purchase_order):
+        """Helper method to copy transporter details from PO to SO (used by dropship module)"""
+        self.ensure_one()
+        if purchase_order:
+            self.write({
+                'transporter_id': purchase_order.transporter_id.id if purchase_order.transporter_id else False,
+                'transporter_vehicle_id': purchase_order.transporter_vehicle_id.id if purchase_order.transporter_vehicle_id else False,
+                'trailer_1_id': purchase_order.trailer_1_id.id if purchase_order.trailer_1_id else False,
+                'trailer_2_id': purchase_order.trailer_2_id.id if purchase_order.trailer_2_id else False,
+                'trailer_3_id': purchase_order.trailer_3_id.id if purchase_order.trailer_3_id else False,
+            })

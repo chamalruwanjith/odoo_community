@@ -96,6 +96,10 @@ class PurchaseOrder(models.Model):
                     'source_purchase_line_id': po_line.id,
                 })
 
+        # Copy transporter and vehicle details from PO to SO (if vkd_fuel_transporter is installed)
+        if hasattr(sale_order, 'copy_transporter_from_purchase'):
+            sale_order.copy_transporter_from_purchase(self)
+
         # Return action to open the new SO
         return {
             'type': 'ir.actions.act_window',

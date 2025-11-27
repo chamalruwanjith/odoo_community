@@ -11,7 +11,27 @@ class StockPicking(models.Model):
     trailer_1_id = fields.Many2one('fleet.trailer', string='Trailer 1', tracking=True)
     trailer_2_id = fields.Many2one('fleet.trailer', string='Trailer 2', tracking=True)
     trailer_3_id = fields.Many2one('fleet.trailer', string='Trailer 3', tracking=True)
-    
+
+    location_rate = fields.Float(string='Location Rate', digits=(16, 2), tracking=True, compute='_compute_location_rate', inverse='_inverse_location_rate', store=True)
+
+    @api.depends('partner_id', 'partner_id.product_id', 'partner_id.product_id.list_price')
+    def _compute_location_rate(self):
+        """Compute location rate from customer's product (for outgoing) or from sale order (for incoming)"""
+        for picking in self:
+            if picking.sale_id and picking.sale_id.location_rate:
+                # For deliveries from SO, use SO's location rate
+                picking.location_rate = picking.sale_id.location_rate
+            elif picking.partner_id and picking.partner_id.product_id:
+                # For other pickings, use partner's location rate product
+                picking.location_rate = picking.partner_id.product_id.list_price
+            else:
+                picking.location_rate = 0.0
+
+    def _inverse_location_rate(self):
+        """Allow manual override of location rate"""
+        for picking in self:
+            picking.location_rate = picking.location_rate
+
     @api.onchange('transporter_id')
     def _onchange_transporter_id(self):
         if not self.transporter_id:
@@ -22,7 +42,7 @@ class StockPicking(models.Model):
         else:
             if self.transporter_vehicle_id and self.transporter_vehicle_id.transporter_id != self.transporter_id:
                 self.transporter_vehicle_id = False
-    
+
     @api.onchange('transporter_vehicle_id')
     def _onchange_transporter_vehicle_id(self):
         if self.transporter_vehicle_id:

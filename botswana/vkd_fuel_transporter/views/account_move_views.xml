@@ -20,6 +20,7 @@
                     <group>
                         <field name="transporter_id"/>
                         <field name="transporter_vehicle_id"/>
+                        <field name="location_rate"/>
                     </group>
                     <group string="Trailers">
                         <field name="trailer_1_id"/>
