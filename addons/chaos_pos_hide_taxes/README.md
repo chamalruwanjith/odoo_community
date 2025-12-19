@@ -2,10 +2,12 @@
 
 ## Overview
 
-This module customizes the Point of Sale receipt to hide tax-related information, providing a cleaner receipt format.
+This module adds a configurable option to hide tax-related information from Point of Sale receipts, providing a cleaner receipt format when needed.
 
 ## Features
 
+- **Configurable per POS**: Enable/disable tax hiding for each Point of Sale separately
+- **Multi-company support**: Company-dependent setting for multi-company environments
 - **Hides untaxed amount**: The subtotal without taxes is not displayed
 - **Hides tax breakdown**: Individual tax groups and their amounts are removed
 - **Maintains total amount**: The final total amount is still shown
@@ -17,18 +19,37 @@ This module customizes the Point of Sale receipt to hide tax-related information
 3. Search for "POS Hide Taxes"
 4. Click Install
 
+## Configuration
+
+After installation, configure the setting for each Point of Sale:
+
+1. Go to `Point of Sale > Configuration > Settings`
+2. Select your Point of Sale from the dropdown at the top
+3. Scroll to the **Bills & Receipts** section
+4. Find the **Hide Taxes on Receipt** checkbox
+5. Enable it to hide tax information from receipts
+6. Click **Save**
+
+**Note**: This setting is company-dependent, so different companies can have different configurations in a multi-company environment.
+
 ## Usage
 
-Once installed, the module automatically modifies all POS receipts to hide:
+### When Enabled
+
+Receipts will hide:
 - Tax breakdown section (subtotals and tax groups)
 - Untaxed amounts
 - Tax details
 
-The receipt will show:
+Receipts will still show:
 - Order lines with prices
 - Total amount
 - Payment information
 - Change (if applicable)
+
+### When Disabled
+
+Receipts will show all tax information as normal (default Odoo behavior).
 
 ## Technical Details
 
@@ -39,10 +60,26 @@ The receipt will show:
 
 ### Implementation
 
-The module uses template inheritance to extend the `point_of_sale.OrderReceipt` template:
-- Removes the `pos-receipt-taxes` div element using XPath
-- No backend modifications required
-- Pure frontend customization
+The module extends the POS system with:
+
+**Backend (Python)**:
+- `pos.config` model: Adds `hide_receipt_taxes` boolean field (company_dependent)
+- `res.config.settings` model: Adds related field for configuration UI
+
+**Frontend (JavaScript)**:
+- `PosOrder.export_for_printing()`: Patched to include the config setting in receipt data
+- `order_receipt.xml`: Template inheritance to conditionally hide tax section based on setting
+
+**Views**:
+- Configuration UI in Point of Sale Settings (Bills & Receipts section)
+
+### Database Fields
+
+- **Field**: `hide_receipt_taxes`
+- **Model**: `pos.config`
+- **Type**: Boolean
+- **Company Dependent**: Yes
+- **Default**: False
 
 ## Compatibility
 

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-    <!-- Inherit OrderReceipt template to hide taxes and untaxed amount -->
+    <!-- Inherit OrderReceipt template to conditionally hide taxes and untaxed amount -->
     <t t-name="point_of_sale.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
 
-        <!-- Hide the tax breakdown section (subtotals and tax groups) -->
-        <xpath expr="//div[hasclass('pos-receipt-taxes')]" position="replace"/>
+        <!-- Add condition to hide tax breakdown section based on config setting -->
+        <xpath expr="//div[hasclass('pos-receipt-taxes')]" position="attributes">
+            <attribute name="t-if">!props.data.hide_receipt_taxes and taxTotals and taxTotals.has_tax_groups</attribute>
+        </xpath>
 
     </t>
 

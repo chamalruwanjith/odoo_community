@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_hide_taxes" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.chaos.pos.hide.taxes</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add setting in Bills & Receipts section -->
+            <xpath expr="//setting[@id='auto_printing']" position="after">
+                <setting id="hide_receipt_taxes" help="Hide untaxed amount and tax breakdown from receipts">
+                    <field name="pos_hide_receipt_taxes"/>
+                    <div class="content-group mt8" invisible="not pos_hide_receipt_taxes">
+                        <div class="text-muted">
+                            Receipts will only display the final total amount without showing tax details or untaxed amounts.
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

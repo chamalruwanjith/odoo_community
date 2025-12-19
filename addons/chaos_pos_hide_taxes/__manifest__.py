@@ -7,19 +7,23 @@
     'description': """
         POS Receipt Customization
         =========================
-        This module hides the following from POS receipts:
+        This module adds a configurable option to hide taxes from POS receipts:
         * Untaxed amount (total without tax)
         * Tax breakdown section
         * Tax details
 
-        The receipt will only show the final total amount.
+        The setting can be enabled/disabled per Point of Sale configuration.
+        Multi-company support included (company_dependent field).
     """,
     'author': 'Chaos',
     'website': '',
     'depends': ['point_of_sale'],
-    'data': [],
+    'data': [
+        'views/res_config_settings_views.xml',
+    ],
     'assets': {
         'point_of_sale._assets_pos': [
+            'chaos_pos_hide_taxes/static/src/app/models/pos_order.js',
             'chaos_pos_hide_taxes/static/src/app/screens/receipt_screen/receipt/order_receipt.xml',
         ],
     },
