@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Inherit OrderReceipt template to hide taxes and untaxed amount -->
+    <t t-name="point_of_sale.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+
+        <!-- Hide the tax breakdown section (subtotals and tax groups) -->
+        <xpath expr="//div[hasclass('pos-receipt-taxes')]" position="replace"/>
+
+    </t>
+
+</templates>
