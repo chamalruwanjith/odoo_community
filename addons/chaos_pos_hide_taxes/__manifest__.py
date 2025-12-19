@@ -13,7 +13,7 @@
         * Tax details
 
         The setting can be enabled/disabled per Point of Sale configuration.
-        Multi-company support included (company_dependent field).
+        Multi-company support: Each POS config has its own setting.
     """,
     'author': 'Chaos',
     'website': '',

@@ -7,7 +7,7 @@ This module adds a configurable option to hide tax-related information from Poin
 ## Features
 
 - **Configurable per POS**: Enable/disable tax hiding for each Point of Sale separately
-- **Multi-company support**: Company-dependent setting for multi-company environments
+- **Multi-company support**: Each POS config can have different settings (POS configs are per-company)
 - **Hides untaxed amount**: The subtotal without taxes is not displayed
 - **Hides tax breakdown**: Individual tax groups and their amounts are removed
 - **Maintains total amount**: The final total amount is still shown
@@ -30,7 +30,7 @@ After installation, configure the setting for each Point of Sale:
 5. Enable it to hide tax information from receipts
 6. Click **Save**
 
-**Note**: This setting is company-dependent, so different companies can have different configurations in a multi-company environment.
+**Note**: Each POS configuration can have different settings. In multi-company environments, create separate POS configs per company.
 
 ## Usage
 
@@ -78,7 +78,7 @@ The module extends the POS system with:
 - **Field**: `hide_receipt_taxes`
 - **Model**: `pos.config`
 - **Type**: Boolean
-- **Company Dependent**: Yes
+- **Company Dependent**: No (pos.config is already per-company via company_id field)
 - **Default**: False
 
 ## Compatibility

@@ -11,5 +11,4 @@ class PosConfig(models.Model):
         default=False,
         help='Hide untaxed amount and tax breakdown from POS receipts. '
              'When enabled, receipts will only show the final total amount without tax details.',
-        company_dependent=True,
     )
