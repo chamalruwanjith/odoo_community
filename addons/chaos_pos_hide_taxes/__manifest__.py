@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'POS Hide Taxes on Receipt',
+    'name': 'POS Receipt Hide Taxes',
     'version': '18.0.1.0.0',
     'category': 'Point of Sale',
     'sequence': 10,
-    'summary': 'Hide tax breakdown and untaxed amounts from POS receipts - Cleaner receipt format',
+    'summary': 'Hide untaxed amount and taxes from POS receipt',
     'description': """
-POS Receipt Tax Configuration
-==============================
+POS Receipt Customization
+=========================
 
-Hide tax information from Point of Sale receipts for a cleaner, simplified format.
+This module hides the following from POS receipts:
+* Untaxed amount (total without tax)
+* Tax breakdown section
+* Tax details
+
+The receipt will only show the final total amount.
 
 Key Features:
 -------------
@@ -21,16 +26,14 @@ Key Features:
 * Easy checkbox configuration
 * No coding required
 
-Perfect for businesses that want simpler receipts without detailed tax information.
-
 Configuration:
 --------------
 Point of Sale → Configuration → Settings → Bills & Receipts → Hide Taxes on Receipt
     """,
-    'author': 'Chaos',
-    'maintainer': 'Chamal Ruwanjith',
-    'website': 'https://github.com/chamalruwanjith/odoo_community',
-    'support': 'https://github.com/chamalruwanjith/odoo_community/issues',
+    'author': 'ChaosHub',
+    'maintainer': 'ChaosHub',
+    'website': 'https://chaoshub.lk/',
+    'support': 'https://github.com/chaoshub-git/odoo-apps/issues',
     'depends': ['point_of_sale'],
     'data': [
         'views/res_config_settings_views.xml',
@@ -48,11 +51,11 @@ Point of Sale → Configuration → Settings → Bills & Receipts → Hide Taxes
         'static/description/screenshot_receipt_comparison.png',
         'static/description/screenshot_settings.png',
     ],
+    'price': 25.00,
+    'currency': 'USD',
     'installable': True,
     'auto_install': False,
     'application': False,
-    'price': 0.00,
-    'currency': 'USD',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'live_test_url': '',
 }

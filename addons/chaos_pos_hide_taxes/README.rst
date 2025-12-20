@@ -1,16 +1,14 @@
-=======================
-POS Hide Taxes on Receipt
-=======================
+===========================
+POS Receipt Hide Taxes
+===========================
 
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production-green.png
-    :target: https://odoo-community.org/page/development-status
     :alt: Production
-.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
-    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-    :alt: License: LGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-chaos__pos__hide__taxes-lightgray.png?logo=github
-    :target: https://github.com/chamalruwanjith/odoo_community/tree/18.0/chaos_pos_hide_taxes
-    :alt: chamalruwanjith/odoo_community
+.. |badge2| image:: https://img.shields.io/badge/licence-OPL--1-blue.png
+    :alt: License: OPL-1
+.. |badge3| image:: https://img.shields.io/badge/github-chaoshub--git-lightgray.png?logo=github
+    :target: https://github.com/chaoshub-git/odoo-apps
+    :alt: ChaosHub
 
 |badge1| |badge2| |badge3|
 
@@ -80,11 +78,11 @@ and each can have its own tax display preference.
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/chamalruwanjith/odoo_community/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/chaoshub-git/odoo-apps/issues>`_.
 
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/chamalruwanjith/odoo_community/issues/new?body=module:%20chaos_pos_hide_taxes%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+If you spotted it first, help us by providing a detailed and welcomed
+`feedback <https://github.com/chaoshub-git/odoo-apps/issues/new?body=module:%20chaos_pos_hide_taxes%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
 =======
@@ -92,22 +90,13 @@ Credits
 Authors
 -------
 
-* Chaos
-
-Contributors
-------------
-
-* Chamal Ruwanjith
+* ChaosHub
 
 Maintainers
 -----------
 
-This module is maintained by Chaos.
+This module is maintained by ChaosHub.
 
-.. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: https://odoo-community.org
+For support or inquiries, visit `chaoshub.lk <https://chaoshub.lk/>`_.
 
-This module is part of the `chamalruwanjith/odoo_community <https://github.com/chamalruwanjith/odoo_community/tree/18.0/chaos_pos_hide_taxes>`_ project on GitHub.
-
-You are welcome to contribute.
+This module is part of the `chaoshub-git/odoo-apps <https://github.com/chaoshub-git/odoo-apps>`_ project on GitHub.
