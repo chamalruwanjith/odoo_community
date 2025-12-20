@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- About Us Page Template -->
+        <template id="about_page" name="About Us">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'about'"/>
+
+                <div id="wrap" class="o_chaoshub_website">
+                    <!-- Hero Section -->
+                    <section class="hero" style="min-height: 60vh;">
+                        <div class="container">
+                            <div class="hero-content">
+                                <span class="hero-badge">About ChaosHub</span>
+                                <h1>Engineering Clarity from Chaos</h1>
+                                <p class="hero-subtext">
+                                    Learn about our mission, vision, and the values that drive us to simplify complex business concepts.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Our Story Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="about-grid">
+                                <div class="about-content">
+                                    <h2>Our Story</h2>
+                                    <p>
+                                        ChaosHub was born from a simple observation: business and technology concepts don't have to be
+                                        complicated. Too often, valuable information is scattered, jargon-heavy, and inaccessible to
+                                        those who need it most.
+                                    </p>
+                                    <p>
+                                        We set out to change that. ChaosHub is built on the belief that clarity drives success. Whether
+                                        you're a startup founder navigating your first ERP implementation or an enterprise leader driving
+                                        digital transformation, you deserve straightforward, actionable guidance.
+                                    </p>
+                                    <p>
+                                        Today, ChaosHub is a growing knowledge platform serving professionals, entrepreneurs, and
+                                        businesses worldwide—transforming chaos into clarity, one insight at a time.
+                                    </p>
+                                </div>
+                                <div class="about-visual">
+                                    <div class="about-icon">🚀</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Mission & Vision Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="grid grid-2">
+                                <div class="card">
+                                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">🎯 Our Mission</h3>
+                                    <p class="card-text" style="font-size: 1.125rem;">
+                                        To simplify complex business and technology concepts, making knowledge accessible and actionable
+                                        for everyone—from entrepreneurs to enterprise leaders.
+                                    </p>
+                                </div>
+
+                                <div class="card">
+                                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">🔭 Our Vision</h3>
+                                    <p class="card-text" style="font-size: 1.125rem;">
+                                        To become the world's most trusted knowledge hub for business management, ERP systems, and
+                                        digital transformation—where complexity becomes clarity.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Our Values Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Our Values</span>
+                                <h2 class="section-title">What We Stand For</h2>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <div class="card feature-card">
+                                    <div class="feature-icon">💎</div>
+                                    <h3 class="card-title">Clarity First</h3>
+                                    <p class="card-text">
+                                        We cut through the noise and jargon to deliver clear, concise, and practical knowledge.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🤝</div>
+                                    <h3 class="card-title">Community Driven</h3>
+                                    <p class="card-text">
+                                        We believe in the power of shared knowledge and collaborative learning.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🎓</div>
+                                    <h3 class="card-title">Continuous Learning</h3>
+                                    <p class="card-text">
+                                        We stay current with industry trends and evolve our content to meet your needs.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">⚡</div>
+                                    <h3 class="card-title">Action Oriented</h3>
+                                    <p class="card-text">
+                                        Every piece of content is designed to help you take immediate, practical action.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🌍</div>
+                                    <h3 class="card-title">Globally Accessible</h3>
+                                    <p class="card-text">
+                                        Knowledge should be free and accessible to everyone, everywhere.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🔍</div>
+                                    <h3 class="card-title">Quality Over Quantity</h3>
+                                    <p class="card-text">
+                                        We prioritize depth and accuracy over volume, ensuring every resource adds real value.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="cta-banner">
+                                <div class="cta-content">
+                                    <h2>Join Our Journey</h2>
+                                    <p>
+                                        Be part of a growing community transforming how the world learns about business and technology.
+                                    </p>
+                                    <div class="cta-buttons">
+                                        <a href="/blog" class="btn btn-primary btn-lg">Explore Knowledge →</a>
+                                        <a href="/contactus" class="btn btn-secondary btn-lg">Get in Touch</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <!-- Page Record -->
+        <record id="about_us_page" model="website.page">
+            <field name="name">About ChaosHub</field>
+            <field name="is_published" eval="True"/>
+            <field name="url">/aboutus</field>
+            <field name="view_id" ref="about_page"/>
+            <field name="track" eval="True"/>
+        </record>
+    </data>
+</odoo>

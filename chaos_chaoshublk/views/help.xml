@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Help/FAQ Page Template -->
+        <template id="help_page" name="Help & Support">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'help'"/>
+
+                <div id="wrap" class="o_chaoshub_website">
+                    <!-- Hero Section -->
+                    <section class="hero" style="min-height: 60vh;">
+                        <div class="container">
+                            <div class="hero-content">
+                                <span class="hero-badge">Support Center</span>
+                                <h1>How Can We Help?</h1>
+                                <p class="hero-subtext">
+                                    Find answers to common questions and get the support you need.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Help Categories -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Browse Help Topics</span>
+                                <h2 class="section-title">Popular Topics</h2>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <div class="card">
+                                    <div class="card-icon">🚀</div>
+                                    <h3 class="card-title">Getting Started</h3>
+                                    <p class="card-text">
+                                        New to ChaosHub? Learn the basics and get started quickly.
+                                    </p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon">📚</div>
+                                    <h3 class="card-title">Knowledge Base</h3>
+                                    <p class="card-text">
+                                        Browse our comprehensive library of articles and guides.
+                                    </p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon">⚙️</div>
+                                    <h3 class="card-title">Technical Support</h3>
+                                    <p class="card-text">
+                                        Get help with technical issues and troubleshooting.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- FAQ Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">FAQ</span>
+                                <h2 class="section-title">Frequently Asked Questions</h2>
+                            </div>
+
+                            <div style="max-width: 900px; margin: 0 auto;">
+                                <!-- FAQ Item 1 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        What is ChaosHub?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        ChaosHub is a knowledge platform dedicated to simplifying complex business and technology concepts.
+                                        We provide curated articles, guides, and tutorials on ERP systems, accounting, digital transformation,
+                                        and modern business management practices.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 2 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        Who is ChaosHub for?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        ChaosHub is designed for professionals, entrepreneurs, business owners, and tech enthusiasts
+                                        who want to learn about ERP systems, business management, accounting, and digital transformation.
+                                        Whether you're just starting out or scaling an enterprise, our content is tailored to help you succeed.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 3 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        Is the content free to access?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Yes! Most of our knowledge base content is freely accessible. We believe in making quality
+                                        business and technology knowledge available to everyone. Some premium services may require
+                                        consultation, but our core educational content remains free.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 4 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        How often is new content published?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        We publish new articles, guides, and tutorials regularly. Subscribe to our newsletter
+                                        to stay updated with the latest content and insights.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 5 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        Do you offer consulting services?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Yes! We offer ERP consulting, digital transformation guidance, accounting system setup,
+                                        and custom knowledge platform development. Visit our <a href="/services">Services page</a>
+                                        to learn more, or <a href="/contactus">contact us</a> directly.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 6 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        How can I contribute to ChaosHub?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        We welcome contributions from industry experts and practitioners! If you'd like to share
+                                        your knowledge or collaborate with us, please <a href="/contactus">get in touch</a>.
+                                        We're always looking for quality content and expert insights to share with our community.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 7 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        What is your focus on Odoo?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Odoo is a powerful open-source ERP platform that we specialize in. We provide comprehensive
+                                        guides, tutorials, and consulting services for Odoo implementation, customization, and optimization.
+                                        Our content helps businesses make the most of Odoo's capabilities.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 8 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        How do I stay updated with new content?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Subscribe to our newsletter to receive the latest articles and insights directly in your inbox.
+                                        You can also follow us on social media for updates, tips, and community discussions.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 9 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        Can I request specific topics or guides?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Absolutely! We value community feedback and content requests. If there's a specific topic
+                                        you'd like us to cover, please <a href="/contactus">send us a message</a> with your suggestions.
+                                    </p>
+                                </div>
+
+                                <!-- FAQ Item 10 -->
+                                <div class="card" style="margin-bottom: 1.5rem;">
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--color-dark);">
+                                        Do you offer training or workshops?
+                                    </h3>
+                                    <p style="margin: 0; color: var(--color-gray); line-height: 1.8;">
+                                        Yes! We offer training workshops on ERP systems, Odoo implementation, business process optimization,
+                                        and more. Check our <a href="/services">Services page</a> for details or contact us to discuss
+                                        custom training programs for your team.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Still Need Help Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="cta-banner">
+                                <div class="cta-content">
+                                    <h2>Still Need Help?</h2>
+                                    <p>
+                                        Can't find the answer you're looking for? Our support team is here to assist you.
+                                    </p>
+                                    <div class="cta-buttons">
+                                        <a href="/contactus" class="btn btn-primary btn-lg">Contact Support →</a>
+                                        <a href="/blog" class="btn btn-secondary btn-lg">Browse Knowledge Base</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Methods -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="grid grid-3">
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
+                                    <h4 class="card-title">Email Support</h4>
+                                    <p class="card-text">
+                                        Send us an email at <a href="mailto:hello@chaoshub.lk">hello@chaoshub.lk</a>
+                                    </p>
+                                    <p class="card-text" style="font-size: 0.875rem;">
+                                        Response within 24 hours
+                                    </p>
+                                </div>
+
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                                    <h4 class="card-title">Community Forum</h4>
+                                    <p class="card-text">
+                                        Join discussions and get help from the community.
+                                    </p>
+                                    <a href="/forum" class="btn btn-primary">Visit Forum →</a>
+                                </div>
+
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+                                    <h4 class="card-title">Documentation</h4>
+                                    <p class="card-text">
+                                        Explore our comprehensive guides and tutorials.
+                                    </p>
+                                    <a href="/blog" class="btn btn-primary">Read Docs →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <!-- Page Record -->
+        <record id="help_page_record" model="website.page">
+            <field name="name">Help &amp; Support</field>
+            <field name="is_published" eval="True"/>
+            <field name="url">/help</field>
+            <field name="view_id" ref="help_page"/>
+            <field name="track" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Services Page Template -->
+        <template id="services_page" name="Our Services">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'services'"/>
+
+                <div id="wrap" class="o_chaoshub_website">
+                    <!-- Hero Section -->
+                    <section class="hero" style="min-height: 60vh;">
+                        <div class="container">
+                            <div class="hero-content">
+                                <span class="hero-badge">Our Services</span>
+                                <h1>Comprehensive Business Solutions</h1>
+                                <p class="hero-subtext">
+                                    From ERP consulting to knowledge platform development, we help businesses transform complexity into clarity.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Services Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">What We Offer</span>
+                                <h2 class="section-title">Services We Provide</h2>
+                                <p class="section-description">
+                                    Tailored solutions to help your business thrive in the digital age.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <!-- ERP Consulting -->
+                                <div class="card">
+                                    <div class="card-icon">📊</div>
+                                    <h3 class="card-title">ERP Consulting &amp; Implementation</h3>
+                                    <p class="card-text">
+                                        Expert guidance for selecting, implementing, and optimizing ERP systems like Odoo for your business needs.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>ERP system selection and evaluation</li>
+                                        <li>Implementation planning and execution</li>
+                                        <li>Custom module development</li>
+                                        <li>Data migration and integration</li>
+                                        <li>Training and support</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Get Started →</a>
+                                </div>
+
+                                <!-- Digital Transformation -->
+                                <div class="card">
+                                    <div class="card-icon">🔄</div>
+                                    <h3 class="card-title">Digital Transformation Consulting</h3>
+                                    <p class="card-text">
+                                        Strategic guidance to modernize your business processes, systems, and workflows for the digital era.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>Digital strategy development</li>
+                                        <li>Process automation</li>
+                                        <li>Cloud migration planning</li>
+                                        <li>Change management</li>
+                                        <li>Technology roadmap creation</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Learn More →</a>
+                                </div>
+
+                                <!-- Knowledge Platform -->
+                                <div class="card">
+                                    <div class="card-icon">📚</div>
+                                    <h3 class="card-title">Knowledge Platform Development</h3>
+                                    <p class="card-text">
+                                        Custom knowledge bases, documentation sites, and learning platforms built with modern web technologies.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>Custom website development</li>
+                                        <li>Documentation systems</li>
+                                        <li>Learning management platforms</li>
+                                        <li>Content strategy and SEO</li>
+                                        <li>Community platform setup</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Discuss Project →</a>
+                                </div>
+
+                                <!-- Business Process Optimization -->
+                                <div class="card">
+                                    <div class="card-icon">⚙️</div>
+                                    <h3 class="card-title">Business Process Optimization</h3>
+                                    <p class="card-text">
+                                        Streamline operations, reduce costs, and improve efficiency through process analysis and optimization.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>Process mapping and analysis</li>
+                                        <li>Workflow automation</li>
+                                        <li>Performance metrics setup</li>
+                                        <li>Bottleneck identification</li>
+                                        <li>Continuous improvement planning</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Optimize Now →</a>
+                                </div>
+
+                                <!-- Accounting Solutions -->
+                                <div class="card">
+                                    <div class="card-icon">💰</div>
+                                    <h3 class="card-title">Accounting System Setup</h3>
+                                    <p class="card-text">
+                                        Complete accounting system implementation, configuration, and training for growing businesses.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>Chart of accounts setup</li>
+                                        <li>Financial reporting configuration</li>
+                                        <li>Multi-currency support</li>
+                                        <li>Tax compliance setup</li>
+                                        <li>Accounting staff training</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Start Setup →</a>
+                                </div>
+
+                                <!-- Training & Support -->
+                                <div class="card">
+                                    <div class="card-icon">🎓</div>
+                                    <h3 class="card-title">Training &amp; Support</h3>
+                                    <p class="card-text">
+                                        Comprehensive training programs and ongoing support to ensure your team maximizes system value.
+                                    </p>
+                                    <ul style="margin: 1.5rem 0; padding-left: 1.5rem; color: var(--color-gray);">
+                                        <li>User training workshops</li>
+                                        <li>Administrator training</li>
+                                        <li>Custom documentation</li>
+                                        <li>Ongoing support packages</li>
+                                        <li>Knowledge transfer sessions</li>
+                                    </ul>
+                                    <a href="/contactus" class="btn btn-primary">Book Training →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Why Choose Us Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Our Approach</span>
+                                <h2 class="section-title">Why Choose ChaosHub</h2>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🎯</div>
+                                    <h3 class="card-title">Results-Driven</h3>
+                                    <p class="card-text">
+                                        We focus on measurable outcomes and tangible business value, not just implementations.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">🤝</div>
+                                    <h3 class="card-title">Partnership Approach</h3>
+                                    <p class="card-text">
+                                        We work alongside your team as partners, not just vendors, ensuring long-term success.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">⚡</div>
+                                    <h3 class="card-title">Rapid Implementation</h3>
+                                    <p class="card-text">
+                                        Our proven methodologies deliver results faster without compromising on quality.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="cta-banner">
+                                <div class="cta-content">
+                                    <h2>Ready to Transform Your Business?</h2>
+                                    <p>
+                                        Let's discuss how we can help you achieve your business goals with the right solutions and strategies.
+                                    </p>
+                                    <div class="cta-buttons">
+                                        <a href="/contactus" class="btn btn-primary btn-lg">Get in Touch →</a>
+                                        <a href="/blog" class="btn btn-secondary btn-lg">Read Case Studies</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <!-- Page Record -->
+        <record id="services_page_record" model="website.page">
+            <field name="name">Our Services</field>
+            <field name="is_published" eval="True"/>
+            <field name="url">/services</field>
+            <field name="view_id" ref="services_page"/>
+            <field name="track" eval="True"/>
+        </record>
+    </data>
+</odoo>

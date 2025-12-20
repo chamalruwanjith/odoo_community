@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Homepage Template -->
+        <template id="homepage" name="ChaosHub Homepage">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'homepage'"/>
+
+                <div id="wrap" class="o_chaoshub_website">
+                    <!-- Hero Section -->
+                    <section class="hero">
+                        <div class="container">
+                            <div class="hero-content">
+                                <span class="hero-badge">Engineering Clarity from Chaos</span>
+                                <h1>Your Journey Starts Here</h1>
+                                <p class="hero-subtext">
+                                    ChaosHub transforms complex business and technology concepts into clear, practical knowledge.
+                                    Learn, explore, and grow with ERP, accounting, digital transformation, and modern business insights.
+                                </p>
+                                <div class="hero-cta">
+                                    <a href="/knowledge" class="btn btn-primary btn-lg">
+                                        Explore Knowledge →
+                                    </a>
+                                    <a href="/contactus" class="btn btn-secondary btn-lg">
+                                        Contact Us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- About Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="about-grid">
+                                <div class="about-content">
+                                    <h2>What is ChaosHub?</h2>
+                                    <p>
+                                        ChaosHub is a growing knowledge hub for professionals, entrepreneurs, and tech enthusiasts.
+                                        Our mission is to simplify ERP, accounting, and business management concepts, turning fragmented
+                                        information into structured, actionable insights.
+                                    </p>
+                                    <p>
+                                        Whether you are starting your business journey or scaling enterprise systems, ChaosHub helps
+                                        you navigate complexity with confidence.
+                                    </p>
+                                    <a href="/aboutus" class="btn btn-primary">Learn More About Us →</a>
+                                </div>
+                                <div class="about-visual">
+                                    <div class="about-icon">🚀</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Knowledge Base Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Knowledge Base</span>
+                                <h2 class="section-title">Explore Our Knowledge Base</h2>
+                                <p class="section-description">
+                                    Discover curated articles, guides, and tutorials covering the most essential business and
+                                    technology topics. Learn at your own pace, gain actionable insights, and stay ahead in your industry.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-4">
+                                <div class="card knowledge-card">
+                                    <div class="card-icon">📊</div>
+                                    <h3 class="card-title">ERP &amp; Business Management</h3>
+                                    <p class="card-text">
+                                        Streamline workflows and improve efficiency with proven ERP strategies and best practices.
+                                    </p>
+                                </div>
+
+                                <div class="card knowledge-card">
+                                    <div class="card-icon">💰</div>
+                                    <h3 class="card-title">Accounting &amp; Finance</h3>
+                                    <p class="card-text">
+                                        Simplify complex accounting processes with clear guides and practical financial insights.
+                                    </p>
+                                </div>
+
+                                <div class="card knowledge-card">
+                                    <div class="card-icon">🔄</div>
+                                    <h3 class="card-title">Digital Transformation</h3>
+                                    <p class="card-text">
+                                        Modern tools and strategies for business growth in the digital age.
+                                    </p>
+                                </div>
+
+                                <div class="card knowledge-card">
+                                    <div class="card-icon">⚙️</div>
+                                    <h3 class="card-title">Odoo &amp; Software Guides</h3>
+                                    <p class="card-text">
+                                        Step-by-step tutorials and tips for maximizing your Odoo implementation.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-8">
+                                <a href="/blog" class="btn btn-primary btn-lg">Browse All Articles →</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Why Learn With Us Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Our Values</span>
+                                <h2 class="section-title">Why Learn with ChaosHub?</h2>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <div class="card feature-card">
+                                    <div class="feature-icon">✓</div>
+                                    <h3 class="card-title">Trusted Insights</h3>
+                                    <p class="card-text">
+                                        Curated by experts and real-world practitioners who understand your challenges.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">⚡</div>
+                                    <h3 class="card-title">Practical Knowledge</h3>
+                                    <p class="card-text">
+                                        Actionable guides you can implement immediately to see real results.
+                                    </p>
+                                </div>
+
+                                <div class="card feature-card">
+                                    <div class="feature-icon">👥</div>
+                                    <h3 class="card-title">Community-Focused</h3>
+                                    <p class="card-text">
+                                        Share, discuss, and learn with peers in a supportive environment.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Featured Articles Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Latest Insights</span>
+                                <h2 class="section-title">Featured Articles</h2>
+                                <p class="section-description">
+                                    Stay up-to-date with our most recent guides, tutorials, and case studies.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-3">
+                                <article class="article-card">
+                                    <div class="article-image">📚</div>
+                                    <div class="article-content">
+                                        <div class="article-meta">
+                                            <span class="article-tag">ERP</span>
+                                            <span>5 min read</span>
+                                        </div>
+                                        <h3 class="article-title">Understanding ERP Systems for Small Businesses</h3>
+                                        <p class="article-excerpt">
+                                            Learn ERP fundamentals and best practices to streamline your business operations.
+                                        </p>
+                                        <a href="/blog" class="article-link">Read More →</a>
+                                    </div>
+                                </article>
+
+                                <article class="article-card">
+                                    <div class="article-image">🚀</div>
+                                    <div class="article-content">
+                                        <div class="article-meta">
+                                            <span class="article-tag">Digital</span>
+                                            <span>7 min read</span>
+                                        </div>
+                                        <h3 class="article-title">Top 5 Digital Transformation Tips for Enterprises</h3>
+                                        <p class="article-excerpt">
+                                            Modern strategies for growth in the digital era and how to implement them.
+                                        </p>
+                                        <a href="/blog" class="article-link">Read More →</a>
+                                    </div>
+                                </article>
+
+                                <article class="article-card">
+                                    <div class="article-image">💡</div>
+                                    <div class="article-content">
+                                        <div class="article-meta">
+                                            <span class="article-tag">Odoo</span>
+                                            <span>6 min read</span>
+                                        </div>
+                                        <h3 class="article-title">Streamline Accounting with Odoo</h3>
+                                        <p class="article-excerpt">
+                                            Practical guides for efficiency and automation in your accounting workflows.
+                                        </p>
+                                        <a href="/blog" class="article-link">Read More →</a>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="text-center mt-8">
+                                <a href="/blog" class="btn btn-primary btn-lg">View All Articles →</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Community CTA Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="cta-banner">
+                                <div class="cta-content">
+                                    <h2>Connect, Learn, Share</h2>
+                                    <p>
+                                        ChaosHub isn't just a platform—it's a growing community of learners, professionals, and
+                                        businesses. Join discussions, ask questions, and share your insights to help others
+                                        transform chaos into clarity.
+                                    </p>
+                                    <div class="cta-buttons">
+                                        <a href="/forum" class="btn btn-primary btn-lg">Join the Community →</a>
+                                        <a href="/contactus" class="btn btn-secondary btn-lg">Contact Us</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Newsletter Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="newsletter">
+                                <h3>Stay Updated with ChaosHub</h3>
+                                <p>
+                                    Subscribe to receive the latest articles, tutorials, and industry insights delivered straight to your inbox.
+                                </p>
+                                <form class="newsletter-form" action="/website/form/subscribe" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <input
+                                        type="email"
+                                        class="newsletter-input"
+                                        placeholder="Enter your email address"
+                                        required="required"
+                                        name="email"
+                                        aria-label="Email address"
+                                    />
+                                    <button type="submit" class="btn btn-primary">Subscribe Now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <!-- Page Record -->
+        <record id="homepage_page" model="website.page">
+            <field name="name">ChaosHub Homepage</field>
+            <field name="is_published" eval="True"/>
+            <field name="url">/</field>
+            <field name="view_id" ref="homepage"/>
+            <field name="track" eval="True"/>
+        </record>
+    </data>
+</odoo>

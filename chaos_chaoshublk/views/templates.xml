@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Common Templates and Snippets -->
+
+        <!-- Footer Template Override -->
+        <template id="chaoshub_footer" name="ChaosHub Footer" inherit_id="website.footer_custom">
+            <xpath expr="//div[@id='footer']" position="replace">
+                <footer class="footer">
+                    <div class="container">
+                        <div class="footer-content">
+                            <div class="footer-logo">ChaosHub.lk</div>
+                            <p class="footer-tagline">Engineering Clarity from Chaos</p>
+
+                            <nav class="footer-links" aria-label="Footer navigation">
+                                <a href="/">Home</a>
+                                <a href="/blog">Knowledge Base</a>
+                                <a href="/services">Services</a>
+                                <a href="/aboutus">About Us</a>
+                                <a href="/contactus">Contact</a>
+                                <a href="/help">Help</a>
+                            </nav>
+
+                            <div class="footer-social">
+                                <a href="https://linkedin.com/company/chaoshub" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                                    in
+                                </a>
+                                <a href="https://youtube.com/@chaoshub" class="social-link" aria-label="YouTube" target="_blank" rel="noopener">
+                                    ▶
+                                </a>
+                                <a href="https://twitter.com/chaoshub" class="social-link" aria-label="Twitter" target="_blank" rel="noopener">
+                                    𝕏
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="footer-bottom">
+                            <p>© <span t-field="res_company.name">Company Name</span> <span t-esc="datetime.datetime.now().year"/>. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+                        </div>
+                    </div>
+                </footer>
+            </xpath>
+        </template>
+
+        <!-- Add Google Fonts to Head -->
+        <template id="chaoshub_fonts" name="ChaosHub Fonts" inherit_id="website.layout">
+            <xpath expr="//head" position="inside">
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+            </xpath>
+        </template>
+
+        <!-- SEO Meta Tags Template -->
+        <template id="chaoshub_meta_tags" name="ChaosHub Meta Tags">
+            <t t-set="additional_title">ChaosHub.lk - Engineering Clarity from Chaos</t>
+            <t t-set="meta_description">ChaosHub transforms complex business and technology concepts into clear, practical knowledge. Learn ERP, accounting, digital transformation, and modern business insights.</t>
+            <t t-set="meta_keywords">ERP, accounting, digital transformation, business management, Odoo, knowledge base, business insights</t>
+
+            <meta name="description" t-att-content="meta_description"/>
+            <meta name="keywords" t-att-content="meta_keywords"/>
+            <meta name="author" content="ChaosHub.lk"/>
+            <meta name="robots" content="index, follow"/>
+
+            <!-- Open Graph -->
+            <meta property="og:title" t-att-content="additional_title"/>
+            <meta property="og:description" t-att-content="meta_description"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" content="https://chaoshub.lk"/>
+
+            <!-- Twitter Card -->
+            <meta name="twitter:card" content="summary_large_image"/>
+            <meta name="twitter:title" t-att-content="additional_title"/>
+            <meta name="twitter:description" t-att-content="meta_description"/>
+        </template>
+    </data>
+</odoo>

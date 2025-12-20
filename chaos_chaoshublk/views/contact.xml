@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Contact Page Template -->
+        <template id="contact_page" name="Contact Us">
+            <t t-call="website.layout">
+                <t t-set="pageName" t-value="'contact'"/>
+
+                <div id="wrap" class="o_chaoshub_website">
+                    <!-- Hero Section -->
+                    <section class="hero" style="min-height: 60vh;">
+                        <div class="container">
+                            <div class="hero-content">
+                                <span class="hero-badge">Get In Touch</span>
+                                <h1>Contact Us</h1>
+                                <p class="hero-subtext">
+                                    We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Form Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="grid grid-2" style="align-items: start;">
+                                <!-- Contact Information -->
+                                <div>
+                                    <h2 style="margin-bottom: 1.5rem;">Let's Connect</h2>
+                                    <p style="font-size: 1.125rem; margin-bottom: 2rem;">
+                                        Whether you have a question about our services, need technical support, or just want to
+                                        say hello, we're here to help.
+                                    </p>
+
+                                    <div class="card" style="margin-bottom: 1.5rem;">
+                                        <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                                            <span style="font-size: 2rem;">📧</span>
+                                            Email
+                                        </h4>
+                                        <p style="margin: 0; font-size: 1.125rem;">
+                                            <a href="mailto:hello@chaoshub.lk">hello@chaoshub.lk</a>
+                                        </p>
+                                    </div>
+
+                                    <div class="card" style="margin-bottom: 1.5rem;">
+                                        <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                                            <span style="font-size: 2rem;">📱</span>
+                                            Phone
+                                        </h4>
+                                        <p style="margin: 0; font-size: 1.125rem;">
+                                            +94 XX XXX XXXX
+                                        </p>
+                                    </div>
+
+                                    <div class="card">
+                                        <h4 style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                                            <span style="font-size: 2rem;">📍</span>
+                                            Location
+                                        </h4>
+                                        <p style="margin: 0; font-size: 1.125rem;">
+                                            Sri Lanka
+                                        </p>
+                                    </div>
+
+                                    <div style="margin-top: 2rem;">
+                                        <h4 style="margin-bottom: 1rem;">Follow Us</h4>
+                                        <div class="footer-social" style="justify-content: flex-start;">
+                                            <a href="https://linkedin.com/company/chaoshub" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                                                in
+                                            </a>
+                                            <a href="https://youtube.com/@chaoshub" class="social-link" aria-label="YouTube" target="_blank" rel="noopener">
+                                                ▶
+                                            </a>
+                                            <a href="https://twitter.com/chaoshub" class="social-link" aria-label="Twitter" target="_blank" rel="noopener">
+                                                𝕏
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Form -->
+                                <div class="card">
+                                    <h3 style="margin-bottom: 1.5rem;">Send Us a Message</h3>
+                                    <form action="/website/form/contactus" method="POST">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <label for="contact_name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Name *</label>
+                                            <input
+                                                type="text"
+                                                id="contact_name"
+                                                name="name"
+                                                class="newsletter-input"
+                                                style="width: 100%;"
+                                                required="required"
+                                                placeholder="Your full name"
+                                            />
+                                        </div>
+
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <label for="contact_email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email *</label>
+                                            <input
+                                                type="email"
+                                                id="contact_email"
+                                                name="email"
+                                                class="newsletter-input"
+                                                style="width: 100%;"
+                                                required="required"
+                                                placeholder="your.email@example.com"
+                                            />
+                                        </div>
+
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <label for="contact_phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Phone</label>
+                                            <input
+                                                type="tel"
+                                                id="contact_phone"
+                                                name="phone"
+                                                class="newsletter-input"
+                                                style="width: 100%;"
+                                                placeholder="+94 XX XXX XXXX"
+                                            />
+                                        </div>
+
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <label for="contact_subject" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Subject *</label>
+                                            <input
+                                                type="text"
+                                                id="contact_subject"
+                                                name="subject"
+                                                class="newsletter-input"
+                                                style="width: 100%;"
+                                                required="required"
+                                                placeholder="How can we help?"
+                                            />
+                                        </div>
+
+                                        <div style="margin-bottom: 1.5rem;">
+                                            <label for="contact_message" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Message *</label>
+                                            <textarea
+                                                id="contact_message"
+                                                name="description"
+                                                class="newsletter-input"
+                                                style="width: 100%; min-height: 200px; resize: vertical;"
+                                                required="required"
+                                                placeholder="Tell us more about your inquiry..."
+                                            ></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                            Send Message →
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- FAQ Quick Links Section -->
+                    <section class="section section-alt">
+                        <div class="container">
+                            <div class="section-header">
+                                <span class="section-badge">Quick Help</span>
+                                <h2 class="section-title">Frequently Asked Questions</h2>
+                                <p class="section-description">
+                                    Looking for quick answers? Check out our help center.
+                                </p>
+                            </div>
+
+                            <div style="text-align: center;">
+                                <a href="/help" class="btn btn-primary btn-lg">Visit Help Center →</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Response Time Section -->
+                    <section class="section">
+                        <div class="container">
+                            <div class="grid grid-3">
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                                    <h4 class="card-title">Fast Response</h4>
+                                    <p class="card-text">
+                                        We typically respond within 24 hours on business days.
+                                    </p>
+                                </div>
+
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                                    <h4 class="card-title">Personalized Support</h4>
+                                    <p class="card-text">
+                                        Every inquiry receives individual attention from our team.
+                                    </p>
+                                </div>
+
+                                <div class="card text-center">
+                                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                                    <h4 class="card-title">Privacy Focused</h4>
+                                    <p class="card-text">
+                                        Your information is secure and never shared with third parties.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <!-- Page Record -->
+        <record id="contact_page_record" model="website.page">
+            <field name="name">Contact Us</field>
+            <field name="is_published" eval="True"/>
+            <field name="url">/contactus</field>
+            <field name="view_id" ref="contact_page"/>
+            <field name="track" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Website Menu Items -->
+
+        <!-- Main Menu: Home -->
+        <record id="menu_home" model="website.menu">
+            <field name="name">Home</field>
+            <field name="url">/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Main Menu: Knowledge Base -->
+        <record id="menu_knowledge" model="website.menu">
+            <field name="name">Knowledge Base</field>
+            <field name="url">/blog</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Main Menu: News -->
+        <record id="menu_news" model="website.menu">
+            <field name="name">News</field>
+            <field name="url">/news</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">25</field>
+        </record>
+
+        <!-- Main Menu: Services -->
+        <record id="menu_services" model="website.menu">
+            <field name="name">Services</field>
+            <field name="url">/services</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Main Menu: About -->
+        <record id="menu_about" model="website.menu">
+            <field name="name">About Us</field>
+            <field name="url">/aboutus</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">40</field>
+        </record>
+
+        <!-- Main Menu: Contact -->
+        <record id="menu_contact" model="website.menu">
+            <field name="name">Contact</field>
+            <field name="url">/contactus</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">50</field>
+        </record>
+
+        <!-- Main Menu: Help -->
+        <record id="menu_help" model="website.menu">
+            <field name="name">Help</field>
+            <field name="url">/help</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence">60</field>
+        </record>
+    </data>
+</odoo>
