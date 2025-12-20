@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <!-- News/Blog Landing Page Template -->
-        <template id="news_page" name="News & Insights">
+        <template id="news_page" name="News &amp; Insights">
             <t t-call="website.layout">
                 <t t-set="pageName" t-value="'news'"/>
 

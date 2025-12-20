@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <!-- Help/FAQ Page Template -->
-        <template id="help_page" name="Help & Support">
+        <template id="help_page" name="Help &amp; Support">
             <t t-call="website.layout">
                 <t t-set="pageName" t-value="'help'"/>
 
