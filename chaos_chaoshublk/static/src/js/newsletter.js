@@ -5,7 +5,6 @@
  */
 
 import publicWidget from "@web/legacy/js/public/public_widget";
-import { jsonrpc } from "@web/core/network/rpc_service";
 
 publicWidget.registry.NewsletterSubscribe = publicWidget.Widget.extend({
     selector: '.js_subscribe_newsletter',
@@ -29,8 +28,11 @@ publicWidget.registry.NewsletterSubscribe = publicWidget.Widget.extend({
         }
 
         try {
-            const result = await jsonrpc('/newsletter/subscribe', {
-                email: email,
+            const result = await this._rpc({
+                route: '/newsletter/subscribe',
+                params: {
+                    email: email,
+                },
             });
 
             if (result.success) {
