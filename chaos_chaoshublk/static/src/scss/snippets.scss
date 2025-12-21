@@ -1,0 +1,123 @@
+// ChaosHub Snippets Styles
+// Specific styles for Website Builder snippets
+
+@import 'variables';
+@import 'mixins';
+
+// ===================================
+// HERO SNIPPET VARIATIONS
+// ===================================
+
+.s_chaoshub_hero {
+    // Small hero
+    &.hero-sm {
+        min-height: 60vh !important;
+    }
+
+    // Large hero
+    &.hero-lg {
+        min-height: 120vh !important;
+    }
+
+    // Solid background variation
+    &.hero-solid {
+        background: $color-dark !important;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    // Image background variation
+    &.hero-image {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        &::before {
+            background: rgba($color-dark, 0.7);
+        }
+    }
+}
+
+// ===================================
+// FEATURES SNIPPET
+// ===================================
+
+.s_chaoshub_features {
+    .feature-icon {
+        transition: transform $transition-base;
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+// ===================================
+// BLOG CARDS SNIPPET
+// ===================================
+
+.s_chaoshub_blog_cards {
+    .article-placeholder {
+        font-size: $text-5xl;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        background: $gradient-primary;
+        color: rgba($color-white, 0.9);
+    }
+}
+
+// ===================================
+// CTA SNIPPET
+// ===================================
+
+.s_chaoshub_cta {
+    &.cta-full-width .cta-banner {
+        border-radius: 0;
+        margin: 0 calc(var(--container-padding) * -1);
+    }
+}
+
+// ===================================
+// NEWSLETTER SNIPPET
+// ===================================
+
+.s_chaoshub_newsletter {
+    .newsletter-message {
+        font-weight: $font-medium;
+        padding: $space-3;
+        border-radius: $radius-md;
+        margin-top: $space-4;
+
+        &.text-success {
+            background-color: rgba($color-accent, 0.1);
+            color: darken($color-accent, 10%);
+        }
+
+        &.text-danger {
+            background-color: rgba($color-secondary, 0.1);
+            color: darken($color-secondary, 10%);
+        }
+    }
+}
+
+// ===================================
+// SNIPPET EDITOR STYLES
+// ===================================
+
+// Highlight editable areas in edit mode
+.o_editable {
+    .s_chaoshub_hero,
+    .s_chaoshub_features,
+    .s_chaoshub_blog_cards,
+    .s_chaoshub_cta,
+    .s_chaoshub_newsletter {
+        &:hover {
+            outline: 2px dashed $color-primary-light;
+            outline-offset: 4px;
+        }
+    }
+}

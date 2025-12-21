@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_chaoshub_newsletter" name="Newsletter Subscription">
+        <section class="s_chaoshub_newsletter section section-alt" data-snippet="s_chaoshub_newsletter">
+            <div class="container">
+                <div class="newsletter">
+                    <h3 contenteditable="true">Stay Updated with ChaosHub</h3>
+                    <p contenteditable="true">
+                        Subscribe to receive the latest articles, tutorials, and industry insights delivered straight to your inbox.
+                    </p>
+                    <form class="newsletter-form js_subscribe_newsletter" action="/newsletter/subscribe" method="POST">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input
+                            type="email"
+                            class="newsletter-input"
+                            placeholder="Enter your email address"
+                            required="required"
+                            name="email"
+                            aria-label="Email address"
+                        />
+                        <button type="submit" class="btn btn-primary">Subscribe Now</button>
+                    </form>
+                    <div class="newsletter-message" style="margin-top: 1rem; display: none;"></div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

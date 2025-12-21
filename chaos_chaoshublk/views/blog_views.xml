@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Blog Post Form View Extension -->
+    <record id="view_blog_post_form_inherit_chaoshub" model="ir.ui.view">
+        <field name="name">blog.post.form.inherit.chaoshub</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
+        <field name="arch" type="xml">
+            <!-- Add SEO Fields -->
+            <xpath expr="//group[@name='website_settings']" position="after">
+                <group string="ChaosHub SEO" name="chaoshub_seo">
+                    <field name="reading_time" readonly="1"/>
+                    <field name="schema_type"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Blog Post List View Extension -->
+    <record id="view_blog_post_tree_inherit_chaoshub" model="ir.ui.view">
+        <field name="name">blog.post.tree.inherit.chaoshub</field>
+        <field name="model">blog.post</field>
+        <field name="inherit_id" ref="website_blog.view_blog_post_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="reading_time"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

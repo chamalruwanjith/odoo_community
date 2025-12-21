@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ChaosHub Features Grid Snippet -->
+    <template id="s_chaoshub_features" name="Features Grid">
+        <section class="s_chaoshub_features section" data-snippet="s_chaoshub_features" data-name="Features Grid">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge" contenteditable="true">Our Values</span>
+                    <h2 class="section-title" contenteditable="true">Why Learn with ChaosHub?</h2>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="card feature-card">
+                        <div class="feature-icon">✓</div>
+                        <h3 class="card-title" contenteditable="true">Trusted Insights</h3>
+                        <p class="card-text" contenteditable="true">
+                            Curated by experts and real-world practitioners who understand your challenges.
+                        </p>
+                    </div>
+
+                    <div class="card feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="card-title" contenteditable="true">Practical Knowledge</h3>
+                        <p class="card-text" contenteditable="true">
+                            Actionable guides you can implement immediately to see real results.
+                        </p>
+                    </div>
+
+                    <div class="card feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3 class="card-title" contenteditable="true">Community-Focused</h3>
+                        <p class="card-text" contenteditable="true">
+                            Share, discuss, and learn with peers in a supportive environment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

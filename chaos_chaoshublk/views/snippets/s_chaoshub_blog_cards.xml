@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_chaoshub_blog_cards" name="Blog Article Cards">
+        <section class="s_chaoshub_blog_cards section section-alt" data-snippet="s_chaoshub_blog_cards">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-badge">Latest Insights</span>
+                    <h2 class="section-title">Featured Articles</h2>
+                </div>
+
+                <div class="grid grid-3">
+                    <t t-foreach="request.env['blog.post'].sudo().search([('website_published', '=', True)], limit=3, order='create_date desc')" t-as="post">
+                        <article class="article-card">
+                            <div class="article-image">
+                                <t t-if="post.cover_properties">
+                                    <img t-att-src="website.image_url(post, 'cover_properties')" t-att-alt="post.name" loading="lazy"/>
+                                </t>
+                                <t t-else="">
+                                    <div class="article-placeholder">📚</div>
+                                </t>
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <span class="article-tag" t-if="post.tag_ids" t-esc="post.tag_ids[0].name"/>
+                                    <span t-if="post.reading_time"><t t-esc="post.reading_time"/> min read</span>
+                                </div>
+                                <h3 class="article-title"><a t-att-href="'/article/%s' % slug(post)" t-esc="post.name"/></h3>
+                                <p class="article-excerpt" t-esc="post.subtitle or post.teaser[:120]"/>
+                                <a t-att-href="'/article/%s' % slug(post)" class="article-link">Read More →</a>
+                            </div>
+                        </article>
+                    </t>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

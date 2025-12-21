@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SEO Meta Tags Template -->
+    <template id="seo_meta_tags" name="ChaosHub SEO Meta Tags">
+        <!-- Default SEO Meta Tags -->
+        <meta name="description" t-att-content="meta_description or 'ChaosHub transforms complex business and technology concepts into clear, practical knowledge.'"/>
+        <meta name="keywords" t-att-content="meta_keywords or 'ERP, accounting, digital transformation, Odoo, business management'"/>
+        <meta name="author" content="ChaosHub.lk"/>
+        <meta name="robots" content="index, follow"/>
+
+        <!-- Open Graph Tags -->
+        <meta property="og:title" t-att-content="additional_title or 'ChaosHub.lk - Engineering Clarity from Chaos'"/>
+        <meta property="og:description" t-att-content="meta_description or 'Transform complex business concepts into clear, practical knowledge.'"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" t-att-content="request.httprequest.url"/>
+        <meta property="og:site_name" content="ChaosHub.lk"/>
+        <meta property="og:image" t-att-content="meta_image or '/chaos_chaoshublk/static/src/img/og-image.jpg'"/>
+
+        <!-- Twitter Card Tags -->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:site" content="@chaoshub"/>
+        <meta name="twitter:title" t-att-content="additional_title or 'ChaosHub.lk'"/>
+        <meta name="twitter:description" t-att-content="meta_description or 'Engineering Clarity from Chaos'"/>
+        <meta name="twitter:image" t-att-content="meta_image or '/chaos_chaoshublk/static/src/img/og-image.jpg'"/>
+    </template>
+
+    <!-- Organization Schema -->
+    <template id="schema_organization" name="Organization Schema">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "ChaosHub",
+            "url": "https://chaoshub.lk",
+            "logo": "<t t-esc="website.image_url(website.company_id, 'logo')"/>",
+            "description": "ChaosHub transforms complex business and technology concepts into clear, practical knowledge.",
+            "sameAs": [
+                "https://www.linkedin.com/company/chaoshub",
+                "https://www.youtube.com/@chaoshub",
+                "https://twitter.com/chaoshub"
+            ],
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "Customer Service",
+                "email": "hello@chaoshub.lk"
+            }
+        }
+        </script>
+    </template>
+
+    <!-- Website Schema -->
+    <template id="schema_website" name="Website Schema">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "ChaosHub.lk",
+            "url": "https://chaoshub.lk",
+            "description": "Engineering Clarity from Chaos - Knowledge hub for ERP, accounting, and business management.",
+            "publisher": {
+                "@type": "Organization",
+                "name": "ChaosHub"
+            },
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://chaoshub.lk/knowledge?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+        </script>
+    </template>
+
+    <!-- Inject SEO Templates into Layout -->
+    <template id="layout_seo_inject" inherit_id="website.layout" priority="999">
+        <xpath expr="//head" position="inside">
+            <t t-call="chaos_chaoshublk.seo_meta_tags"/>
+            <t t-if="page_name == 'homepage'">
+                <t t-call="chaos_chaoshublk.schema_organization"/>
+                <t t-call="chaos_chaoshublk.schema_website"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

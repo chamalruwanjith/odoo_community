@@ -1,0 +1,130 @@
+// ChaosHub.lk - SCSS Variables
+// Professional design system variables for consistency
+
+// ===================================
+// COLOR SYSTEM
+// ===================================
+
+// Primary Colors
+$color-primary: #6366f1;
+$color-primary-dark: #4f46e5;
+$color-primary-light: #818cf8;
+$color-secondary: #ec4899;
+$color-accent: #14b8a6;
+
+// Neutral Colors
+$color-dark: #0f172a;
+$color-dark-alt: #1e293b;
+$color-gray: #64748b;
+$color-gray-light: #cbd5e1;
+$color-gray-lighter: #f1f5f9;
+$color-white: #ffffff;
+
+// Gradients
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, #8b5cf6 100%);
+$gradient-secondary: linear-gradient(135deg, $color-secondary 0%, #f43f5e 100%);
+$gradient-accent: linear-gradient(135deg, $color-accent 0%, #06b6d4 100%);
+$gradient-dark: linear-gradient(135deg, $color-dark 0%, $color-dark-alt 100%);
+
+// ===================================
+// TYPOGRAPHY
+// ===================================
+
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-heading: 'Sora', $font-primary;
+
+// Font Sizes
+$text-xs: 0.75rem;
+$text-sm: 0.875rem;
+$text-base: 1rem;
+$text-lg: 1.125rem;
+$text-xl: 1.25rem;
+$text-2xl: 1.5rem;
+$text-3xl: 1.875rem;
+$text-4xl: 2.25rem;
+$text-5xl: 3rem;
+$text-6xl: 3.75rem;
+
+// Font Weights
+$font-light: 300;
+$font-normal: 400;
+$font-medium: 500;
+$font-semibold: 600;
+$font-bold: 700;
+$font-extrabold: 800;
+
+// ===================================
+// SPACING
+// ===================================
+
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.25rem;
+$space-6: 1.5rem;
+$space-8: 2rem;
+$space-10: 2.5rem;
+$space-12: 3rem;
+$space-16: 4rem;
+$space-20: 5rem;
+$space-24: 6rem;
+
+// ===================================
+// BORDERS & RADIUS
+// ===================================
+
+$radius-sm: 0.375rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
+$radius-2xl: 1.5rem;
+$radius-full: 9999px;
+
+$border-width: 1px;
+$border-width-2: 2px;
+$border-width-4: 4px;
+
+// ===================================
+// SHADOWS
+// ===================================
+
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+// ===================================
+// TRANSITIONS
+// ===================================
+
+$transition-fast: 150ms ease-in-out;
+$transition-base: 250ms ease-in-out;
+$transition-slow: 350ms ease-in-out;
+
+// ===================================
+// BREAKPOINTS
+// ===================================
+
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// ===================================
+// LAYOUT
+// ===================================
+
+$container-max: 1280px;
+$container-padding: 1.5rem;
+
+// Z-index Scale
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ChaosHub Hero Snippet -->
+    <template id="s_chaoshub_hero" name="ChaosHub Hero Section">
+        <section class="s_chaoshub_hero hero" data-snippet="s_chaoshub_hero" data-name="Hero Section">
+            <div class="container">
+                <div class="hero-content">
+                    <span class="hero-badge" contenteditable="true">Engineering Clarity from Chaos</span>
+                    <h1 contenteditable="true">Your Journey Starts Here</h1>
+                    <p class="hero-subtext" contenteditable="true">
+                        ChaosHub transforms complex business and technology concepts into clear, practical knowledge.
+                        Learn, explore, and grow with ERP, accounting, digital transformation, and modern business insights.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="/knowledge" class="btn btn-primary btn-lg">Explore Knowledge →</a>
+                        <a href="/contactus" class="btn btn-secondary btn-lg">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Snippet Options -->
+    <template id="s_chaoshub_hero_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-selector=".s_chaoshub_hero">
+                <we-row string="Hero Style">
+                    <we-select string="Background" data-select-style="">
+                        <we-button data-select-class="hero-gradient">Gradient</we-button>
+                        <we-button data-select-class="hero-solid">Solid</we-button>
+                        <we-button data-select-class="hero-image">Image</we-button>
+                    </we-select>
+                </we-row>
+                <we-row string="Height">
+                    <we-select string="Min Height" data-select-style="">
+                        <we-button data-select-class="hero-sm" title="Small">Small (60vh)</we-button>
+                        <we-button data-select-class="" title="Default">Default (100vh)</we-button>
+                        <we-button data-select-class="hero-lg" title="Large">Large (120vh)</we-button>
+                    </we-select>
+                </we-row>
+            </div>
+        </xpath>
+    </template>
+</odoo>

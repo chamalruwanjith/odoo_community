@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Knowledge Base Page -->
+    <template id="knowledge_base_page" name="Knowledge Base">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Knowledge Base | ChaosHub.lk</t>
+
+            <div id="wrap" class="o_chaoshub_website knowledge_base_page">
+                <!-- Hero Section -->
+                <section class="hero" style="min-height: 60vh;">
+                    <div class="container">
+                        <div class="hero-content">
+                            <span class="hero-badge">Knowledge Hub</span>
+                            <h1>Browse Our Knowledge Base</h1>
+                            <p class="hero-subtext">
+                                Discover curated articles, guides, and tutorials on ERP, accounting, and business management.
+                            </p>
+
+                            <!-- Search Bar -->
+                            <form class="knowledge-search" method="get" action="/knowledge">
+                                <input type="text" name="search" class="newsletter-input" style="max-width: 600px; margin: 2rem auto 0;"
+                                       t-att-value="search_query or ''" placeholder="Search articles..."/>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Categories Filter -->
+                <section class="section">
+                    <div class="container">
+                        <div class="categories-filter" style="margin-bottom: 2rem;">
+                            <a href="/knowledge" t-attf-class="btn #{not current_category and 'btn-primary' or 'btn-secondary'}">All</a>
+                            <t t-foreach="categories" t-as="category">
+                                <a t-att-href="'/knowledge?category=%s' % category.name"
+                                   t-attf-class="btn #{current_category == category.name and 'btn-primary' or 'btn-secondary'}"
+                                   t-esc="category.name"/>
+                            </t>
+                        </div>
+
+                        <!-- Articles Grid -->
+                        <div class="grid grid-3">
+                            <t t-foreach="posts" t-as="post">
+                                <article class="article-card">
+                                    <div class="article-image">
+                                        <t t-if="post.cover_properties">
+                                            <img t-att-src="website.image_url(post, 'cover_properties')" t-att-alt="post.name" loading="lazy"/>
+                                        </t>
+                                        <t t-else="">📚</t>
+                                    </div>
+                                    <div class="article-content">
+                                        <div class="article-meta">
+                                            <span class="article-tag" t-if="post.tag_ids" t-esc="post.tag_ids[0].name"/>
+                                            <span t-if="post.reading_time"><t t-esc="post.reading_time"/> min read</span>
+                                        </div>
+                                        <h3 class="article-title" t-esc="post.name"/>
+                                        <p class="article-excerpt" t-esc="post.subtitle or (post.teaser[:150] if post.teaser else '')"/>
+                                        <a t-att-href="'/article/%s' % slug(post)" class="article-link">Read More →</a>
+                                    </div>
+                                </article>
+                            </t>
+                        </div>
+
+                        <!-- Pagination -->
+                        <t t-if="pager">
+                            <t t-call="website.pager">
+                                <t t-set="classname">justify-content-center mt-5</t>
+                            </t>
+                        </t>
+
+                        <!-- No Results -->
+                        <t t-if="not posts">
+                            <div class="text-center" style="padding: 4rem 0;">
+                                <h3>No articles found</h3>
+                                <p>Try adjusting your search or filters.</p>
+                                <a href="/knowledge" class="btn btn-primary">View All Articles</a>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- Page Record -->
+    <record id="knowledge_base_page_record" model="website.page">
+        <field name="name">Knowledge Base</field>
+        <field name="is_published" eval="True"/>
+        <field name="url">/knowledge</field>
+        <field name="view_id" ref="knowledge_base_page"/>
+        <field name="track" eval="True"/>
+    </record>
+</odoo>

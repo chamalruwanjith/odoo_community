@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_chaoshub_cta" name="CTA Banner">
+        <section class="s_chaoshub_cta section" data-snippet="s_chaoshub_cta">
+            <div class="container">
+                <div class="cta-banner">
+                    <div class="cta-content">
+                        <h2 contenteditable="true">Connect, Learn, Share</h2>
+                        <p contenteditable="true">
+                            ChaosHub isn't just a platform—it's a growing community of learners, professionals, and
+                            businesses. Join discussions, ask questions, and share your insights.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="/forum" class="btn btn-primary btn-lg">Join the Community →</a>
+                            <a href="/contactus" class="btn btn-secondary btn-lg">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>
