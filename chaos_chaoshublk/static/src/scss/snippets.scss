@@ -1,8 +1,6 @@
 // ChaosHub Snippets Styles
 // Specific styles for Website Builder snippets
-
-@import 'variables';
-@import 'mixins';
+// NOTE: variables.scss and mixins.scss are loaded before this file in __manifest__.py
 
 // ===================================
 // HERO SNIPPET VARIATIONS

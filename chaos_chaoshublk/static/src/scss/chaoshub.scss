@@ -2,10 +2,8 @@
  * ChaosHub.lk - Main SCSS Stylesheet
  * Version: 2.0.0
  * Modern, modular SCSS for Odoo 18
+ * NOTE: variables.scss and mixins.scss are loaded before this file in __manifest__.py
  */
-
-@import 'variables';
-@import 'mixins';
 
 // ===================================
 // GLOBAL RESETS
