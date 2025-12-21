@@ -4,48 +4,37 @@
     <!-- Register custom snippets for drag-and-drop in Website Builder -->
 
     <template id="chaoshub_snippets" inherit_id="website.snippets" priority="16">
-        <!-- Add ChaosHub Snippet Category -->
-        <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
-            <t id="chaoshub_snippets_category">
-                <div class="o_panel_header">
-                    ChaosHub Components
-                </div>
-            </t>
-        </xpath>
-
-        <!-- Hero Section Snippet -->
-        <xpath expr="//t[@id='chaoshub_snippets_category']" position="after">
+        <!-- Add ChaosHub Snippets directly -->
+        <xpath expr="//div[@id='snippet_options']" position="before">
+            <!-- Hero Section Snippet -->
             <t t-snippet="chaos_chaoshublk.s_chaoshub_hero"
                t-thumbnail="/chaos_chaoshublk/static/src/img/snippets/s_hero_thumb.svg"
-               string="ChaosHub Hero"/>
-        </xpath>
+               string="ChaosHub Hero"
+               keywords="hero banner header"/>
 
-        <!-- Features Grid Snippet -->
-        <xpath expr="//t[@id='chaoshub_snippets_category']" position="after">
+            <!-- Features Grid Snippet -->
             <t t-snippet="chaos_chaoshublk.s_chaoshub_features"
                t-thumbnail="/chaos_chaoshublk/static/src/img/snippets/s_features_thumb.svg"
-               string="Features Grid"/>
-        </xpath>
+               string="Features Grid"
+               keywords="features services grid"/>
 
-        <!-- Blog Cards Snippet -->
-        <xpath expr="//t[@id='chaoshub_snippets_category']" position="after">
+            <!-- Blog Cards Snippet -->
             <t t-snippet="chaos_chaoshublk.s_chaoshub_blog_cards"
                t-thumbnail="/chaos_chaoshublk/static/src/img/snippets/s_blog_cards_thumb.svg"
-               string="Blog Cards"/>
-        </xpath>
+               string="Blog Cards"
+               keywords="blog articles posts cards"/>
 
-        <!-- CTA Banner Snippet -->
-        <xpath expr="//t[@id='chaoshub_snippets_category']" position="after">
+            <!-- CTA Banner Snippet -->
             <t t-snippet="chaos_chaoshublk.s_chaoshub_cta"
                t-thumbnail="/chaos_chaoshublk/static/src/img/snippets/s_cta_thumb.svg"
-               string="CTA Banner"/>
-        </xpath>
+               string="CTA Banner"
+               keywords="call to action cta banner"/>
 
-        <!-- Newsletter Snippet -->
-        <xpath expr="//t[@id='chaoshub_snippets_category']" position="after">
+            <!-- Newsletter Snippet -->
             <t t-snippet="chaos_chaoshublk.s_chaoshub_newsletter"
                t-thumbnail="/chaos_chaoshublk/static/src/img/snippets/s_newsletter_thumb.svg"
-               string="Newsletter Subscription"/>
+               string="Newsletter"
+               keywords="newsletter subscribe email"/>
         </xpath>
     </template>
 </odoo>

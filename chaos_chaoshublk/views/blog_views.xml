@@ -6,8 +6,8 @@
         <field name="model">blog.post</field>
         <field name="inherit_id" ref="website_blog.view_blog_post_form"/>
         <field name="arch" type="xml">
-            <!-- Add SEO Fields -->
-            <xpath expr="//group[@name='website_settings']" position="after">
+            <!-- Add SEO Fields to the form -->
+            <xpath expr="//sheet//group[last()]" position="after">
                 <group string="ChaosHub SEO" name="chaoshub_seo">
                     <field name="reading_time" readonly="1"/>
                     <field name="schema_type"/>
