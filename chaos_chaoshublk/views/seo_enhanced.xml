@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Enhanced SEO Templates with JSON-LD Structured Data -->
+
+    <!-- Website-wide Organization Schema -->
+    <template id="website_seo_organization" inherit_id="website.layout" priority="999">
+        <xpath expr="//head" position="inside">
+            <!-- Organization JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "EducationalOrganization",
+                "name": "ChaosHub",
+                "alternateName": "ChaosHub.lk",
+                "description": "ERP and business systems education for Sri Lankan businesses. Free knowledge hub for digital transformation, Odoo tutorials, and enterprise resource planning.",
+                "url": "<t t-esc="request.httprequest.url_root"/>",
+                "logo": "<t t-esc="request.httprequest.url_root"/>web/image/website/1/logo",
+                "foundingDate": "2025",
+                "sameAs": [
+                    "https://linkedin.com/company/chaoshub",
+                    "https://facebook.com/chaoshub",
+                    "https://twitter.com/chaoshub"
+                ],
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "LK",
+                    "addressRegion": "Western Province"
+                },
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Sri Lanka"
+                },
+                "knowsAbout": [
+                    "Enterprise Resource Planning",
+                    "Odoo ERP",
+                    "Digital Transformation",
+                    "Business Management Systems",
+                    "Accounting Software",
+                    "Inventory Management"
+                ],
+                "educationalCredentialAwarded": "Digital Transformation Knowledge"
+            }
+            </script>
+
+            <!-- Website JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "ChaosHub - ERP Knowledge Hub",
+                "url": "<t t-esc="request.httprequest.url_root"/>",
+                "description": "Free ERP education for Sri Lankan businesses",
+                "inLanguage": "en-LK",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "<t t-esc="request.httprequest.url_root"/>knowledge?search={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Homepage SEO Enhancement -->
+    <template id="homepage_seo_meta" inherit_id="chaos_chaoshublk.homepage_template" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- Primary Meta Tags -->
+            <meta name="title" content="ERP Knowledge Hub for Sri Lankan Businesses | ChaosHub.lk"/>
+            <meta name="description" content="Free ERP education for Sri Lankan businesses. Learn about enterprise resource planning, Odoo tutorials, digital transformation, and business systems. Vendor-neutral guides for manufacturing, retail, and service industries."/>
+            <meta name="keywords" content="ERP Sri Lanka, ERP tutorial, Odoo Sri Lanka, business management software, accounting software Sri Lanka, digital transformation, ERP implementation, manufacturing ERP, retail ERP"/>
+            <meta name="author" content="ChaosHub"/>
+            <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+            <meta name="language" content="English"/>
+            <meta name="revisit-after" content="7 days"/>
+
+            <!-- Open Graph / Facebook -->
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" content="https://chaoshub.lk/"/>
+            <meta property="og:title" content="Transform Your Business with ERP Knowledge | ChaosHub.lk"/>
+            <meta property="og:description" content="Sri Lanka's free resource for understanding enterprise systems. Learn ERP, Odoo, digital transformation, and business automation."/>
+            <meta property="og:image" content="https://chaoshub.lk/web/image/website/1/social_default_image"/>
+            <meta property="og:image:width" content="1200"/>
+            <meta property="og:image:height" content="630"/>
+            <meta property="og:site_name" content="ChaosHub"/>
+            <meta property="og:locale" content="en_LK"/>
+
+            <!-- Twitter -->
+            <meta property="twitter:card" content="summary_large_image"/>
+            <meta property="twitter:url" content="https://chaoshub.lk/"/>
+            <meta property="twitter:title" content="Transform Your Business with ERP Knowledge | ChaosHub.lk"/>
+            <meta property="twitter:description" content="Sri Lanka's free resource for understanding enterprise systems. Learn ERP, Odoo, and digital transformation."/>
+            <meta property="twitter:image" content="https://chaoshub.lk/web/image/website/1/social_default_image"/>
+
+            <!-- Additional SEO Tags -->
+            <link rel="canonical" href="https://chaoshub.lk/"/>
+            <meta name="theme-color" content="#6366f1"/>
+            <meta name="msapplication-TileColor" content="#6366f1"/>
+
+            <!-- Breadcrumb JSON-LD for Homepage -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "<t t-esc="request.httprequest.url_root"/>"
+                }]
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Knowledge Base SEO Enhancement -->
+    <template id="knowledge_base_seo_meta" inherit_id="chaos_chaoshublk.knowledge_base_page" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- Primary Meta Tags -->
+            <meta name="title" content="ERP Knowledge Base - Free Tutorials &amp; Guides | ChaosHub.lk"/>
+            <meta name="description" content="Browse our comprehensive library of ERP tutorials, Odoo guides, and digital transformation resources for Sri Lankan businesses. Free, practical, vendor-neutral knowledge."/>
+            <meta name="robots" content="index, follow"/>
+
+            <!-- Open Graph -->
+            <meta property="og:type" content="website"/>
+            <meta property="og:url" content="https://chaoshub.lk/knowledge"/>
+            <meta property="og:title" content="ERP Knowledge Base | ChaosHub.lk"/>
+            <meta property="og:description" content="Comprehensive ERP tutorials and business systems guides for Sri Lankan enterprises"/>
+
+            <!-- Canonical URL -->
+            <link rel="canonical" href="https://chaoshub.lk/knowledge"/>
+
+            <!-- CollectionPage JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "name": "ERP Knowledge Base",
+                "description": "Comprehensive collection of ERP tutorials and business systems guides",
+                "url": "<t t-esc="request.httprequest.url_root"/>knowledge",
+                "inLanguage": "en-LK",
+                "isPartOf": {
+                    "@type": "WebSite",
+                    "name": "ChaosHub",
+                    "url": "<t t-esc="request.httprequest.url_root"/>"
+                }
+            }
+            </script>
+
+            <!-- Breadcrumb JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "<t t-esc="request.httprequest.url_root"/>"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Knowledge Base",
+                        "item": "<t t-esc="request.httprequest.url_root"/>knowledge"
+                    }
+                ]
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- FAQ Schema for Help Page -->
+    <template id="help_page_faq_schema" inherit_id="chaos_chaoshublk.help_page" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- FAQPage JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "name": "Help &amp; Support - Frequently Asked Questions",
+                "description": "Common questions about ERP systems, Odoo, and digital transformation",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is ERP?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Enterprise Resource Planning (ERP) is integrated management software that helps businesses manage core processes like accounting, inventory, sales, HR, and manufacturing in one unified system."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Why should I use Odoo for my business?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Odoo is a comprehensive open-source ERP that offers flexibility, cost-effectiveness, and extensive customization options. It's ideal for businesses of all sizes in Sri Lanka looking for modern business management software."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is ChaosHub affiliated with Odoo?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No, ChaosHub is an independent educational platform. We provide vendor-neutral information to help businesses make informed decisions about ERP systems."
+                        }
+                    }
+                ]
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Contact Page Schema -->
+    <template id="contact_page_schema" inherit_id="chaos_chaoshublk.contact_page" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- ContactPage JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "ContactPage",
+                "name": "Contact Us - ChaosHub",
+                "description": "Get in touch with ChaosHub for ERP guidance and business transformation support",
+                "url": "<t t-esc="request.httprequest.url_root"/>contactus",
+                "mainEntity": {
+                    "@type": "Organization",
+                    "name": "ChaosHub",
+                    "email": "info@chaoshub.lk",
+                    "url": "<t t-esc="request.httprequest.url_root"/>"
+                }
+            }
+            </script>
+
+            <!-- Breadcrumb -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "<t t-esc="request.httprequest.url_root"/>"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Contact",
+                        "item": "<t t-esc="request.httprequest.url_root"/>contactus"
+                    }
+                ]
+            }
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Services Page Schema -->
+    <template id="services_page_schema" inherit_id="chaos_chaoshublk.services_page" priority="1">
+        <xpath expr="//head" position="inside">
+            <!-- Service JSON-LD -->
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Service",
+                "serviceType": "ERP Education and Consulting",
+                "provider": {
+                    "@type": "EducationalOrganization",
+                    "name": "ChaosHub"
+                },
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Sri Lanka"
+                },
+                "hasOfferCatalog": {
+                    "@type": "OfferCatalog",
+                    "name": "ERP Services",
+                    "itemListElement": [
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "ERP Education",
+                                "description": "Free educational resources about ERP systems"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "itemOffered": {
+                                "@type": "Service",
+                                "name": "Digital Transformation Guidance",
+                                "description": "Vendor-neutral consulting for business digitalization"
+                            }
+                        }
+                    ]
+                }
+            }
+            </script>
+        </xpath>
+    </template>
+
+</odoo>

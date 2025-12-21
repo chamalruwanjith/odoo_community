@@ -1,0 +1,407 @@
+/**
+ * ChaosHub.lk - Dark Theme Styles
+ * Enhanced dark theme with modern design and accessibility
+ */
+
+// ===================================
+// DARK THEME VARIABLES
+// ===================================
+
+$dark-bg-primary: #191919;
+$dark-bg-secondary: #1A1A1A;
+$dark-bg-card: #242424;
+$dark-bg-footer: #0F0F0F;
+$dark-border: #2D2D2D;
+$dark-text-primary: #E0E0E0;
+$dark-text-secondary: #B0B0B0;
+$dark-text-heading: #FFFFFF;
+$dark-accent: #BB86FC;
+$dark-accent-hover: #A06FE0;
+$dark-muted: #6C757D;
+
+// ===================================
+// GLOBAL DARK THEME OVERRIDES
+// ===================================
+
+body.dark-theme {
+    background-color: $dark-bg-primary !important;
+    color: $dark-text-primary !important;
+    font-family: 'Inter', 'Roboto', 'Open Sans', sans-serif;
+    line-height: 1.6;
+}
+
+.dark-theme {
+
+    // Section backgrounds
+    #wrap section {
+        background-color: $dark-bg-primary;
+    }
+
+    #wrap section:nth-child(even) {
+        background-color: $dark-bg-secondary;
+    }
+
+    // Header and Navigation
+    header.o_header_standard {
+        background-color: $dark-bg-primary !important;
+        border-bottom: 1px solid $dark-border;
+    }
+
+    .navbar-nav .nav-link {
+        color: $dark-text-primary !important;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $dark-accent !important;
+        }
+    }
+
+    // Typography
+    h1, h2, h3, h4, h5, h6 {
+        color: $dark-text-heading !important;
+        font-weight: 600;
+    }
+
+    .lead {
+        color: $dark-text-primary;
+        font-size: 1.25rem;
+        line-height: 1.7;
+    }
+
+    p {
+        color: $dark-text-primary;
+    }
+
+    // Buttons
+    .btn-primary {
+        background-color: $dark-accent !important;
+        border-color: $dark-accent !important;
+        color: #000000 !important;
+        font-weight: 600;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: $dark-accent-hover !important;
+            border-color: $dark-accent-hover !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(187, 134, 252, 0.3);
+        }
+    }
+
+    .btn-secondary,
+    .btn-outline-light {
+        border-color: $dark-text-primary !important;
+        color: $dark-text-primary !important;
+        background-color: transparent !important;
+
+        &:hover {
+            background-color: rgba(224, 224, 224, 0.1) !important;
+            border-color: $dark-accent !important;
+            color: $dark-accent !important;
+        }
+    }
+
+    // Cards
+    .card,
+    .blog-card,
+    .feature-card,
+    div[style*="background-color: #242424"] {
+        background-color: $dark-bg-card !important;
+        border: 1px solid $dark-border !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(187, 134, 252, 0.2);
+        }
+    }
+
+    // Links
+    a {
+        color: $dark-accent;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: $dark-accent-hover;
+        }
+    }
+
+    // Badges
+    .badge {
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        background-color: rgba($dark-accent, 0.2);
+        color: $dark-accent;
+    }
+
+    // Forms
+    .form-control {
+        background-color: $dark-bg-primary !important;
+        border: 1px solid $dark-border !important;
+        color: $dark-text-primary !important;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+            background-color: $dark-bg-primary !important;
+            border-color: $dark-accent !important;
+            color: $dark-text-primary !important;
+            box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.25);
+        }
+
+        &::placeholder {
+            color: $dark-muted;
+        }
+    }
+
+    // Accordions
+    .accordion-button {
+        background-color: $dark-bg-card !important;
+        color: $dark-text-heading !important;
+        border: none !important;
+
+        &:not(.collapsed) {
+            background-color: $dark-border !important;
+            color: $dark-accent !important;
+        }
+
+        &::after {
+            filter: invert(1);
+        }
+    }
+
+    .accordion-body {
+        background-color: $dark-bg-card;
+        color: $dark-text-primary;
+        border-top: 1px solid $dark-border;
+    }
+
+    // Footer
+    footer {
+        background-color: $dark-bg-footer !important;
+        border-top: 1px solid $dark-border;
+        color: $dark-text-secondary;
+
+        a {
+            color: $dark-text-secondary;
+
+            &:hover {
+                color: $dark-accent;
+            }
+        }
+    }
+
+    // Selection Color
+    ::selection {
+        background-color: $dark-accent;
+        color: #000000;
+    }
+
+    // Accessibility: Focus States
+    button:focus,
+    a:focus,
+    input:focus {
+        outline: 2px solid $dark-accent;
+        outline-offset: 2px;
+    }
+
+    // Custom Scrollbar
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: $dark-bg-primary;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: $dark-border;
+        border-radius: 6px;
+
+        &:hover {
+            background: $dark-accent;
+        }
+    }
+
+    // Social Media Icons
+    .fa-linkedin,
+    .fa-facebook,
+    .fa-youtube {
+        color: $dark-text-primary;
+        transition: color 0.3s ease;
+    }
+
+    .fa-linkedin:hover { color: #0A66C2; }
+    .fa-facebook:hover { color: #1877F2; }
+    .fa-youtube:hover { color: #FF0000; }
+
+    // Hero Section Dark Theme
+    .hero {
+        background: linear-gradient(135deg, $dark-bg-primary 0%, $dark-bg-footer 100%);
+
+        &::before {
+            background: radial-gradient(circle at 30% 50%, rgba($dark-accent, 0.15), transparent 50%);
+        }
+    }
+
+    // Blog Cards Dark Theme
+    .blog-card {
+        .blog-image {
+            background: linear-gradient(135deg, $dark-accent 0%, $dark-accent-hover 100%);
+        }
+
+        .blog-meta {
+            border-top-color: $dark-border;
+        }
+    }
+
+    // Newsletter Section
+    .newsletter-section {
+        background: $dark-bg-secondary;
+
+        input[type="email"] {
+            border-color: $dark-border;
+        }
+    }
+
+    // CTA Section
+    .cta-section {
+        background: linear-gradient(135deg, $dark-accent 0%, $dark-accent-hover 100%);
+
+        h2 {
+            color: #000000 !important;
+        }
+
+        p {
+            color: rgba(0, 0, 0, 0.8);
+        }
+    }
+}
+
+// ===================================
+// THEME TOGGLE BUTTON
+// ===================================
+
+.theme-toggle-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $color-primary 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    .icon-sun,
+    .icon-moon {
+        transition: opacity 0.3s ease;
+    }
+}
+
+.dark-theme .theme-toggle-btn {
+    background: linear-gradient(135deg, $dark-accent 0%, $dark-accent-hover 100%);
+}
+
+// ===================================
+// SMOOTH TRANSITIONS
+// ===================================
+
+body,
+section,
+.card,
+.btn,
+a {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+// ===================================
+// RESPONSIVE ADJUSTMENTS
+// ===================================
+
+@media (max-width: 991px) {
+    .dark-theme {
+        h1 {
+            font-size: 2.5rem !important;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 2rem;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .dark-theme {
+        h1 {
+            font-size: 2rem !important;
+        }
+
+        section {
+            padding-top: 48px !important;
+            padding-bottom: 48px !important;
+        }
+    }
+
+    .theme-toggle-btn {
+        width: 48px;
+        height: 48px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 20px;
+    }
+}
+
+// ===================================
+// LOADING ANIMATION
+// ===================================
+
+img {
+    transition: opacity 0.3s ease;
+
+    &:not([src]) {
+        opacity: 0;
+    }
+}
+
+// ===================================
+// PRINT STYLES (Force Light Theme)
+// ===================================
+
+@media print {
+    .dark-theme {
+        background-color: white !important;
+        color: black !important;
+
+        * {
+            background-color: white !important;
+            color: black !important;
+        }
+    }
+
+    .theme-toggle-btn {
+        display: none !important;
+    }
+}

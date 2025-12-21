@@ -3,7 +3,7 @@
 
 {
     'name': 'ChaosHub.lk Website',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Website/Website',
     'summary': 'Professional Knowledge Hub with SEO, Snippets & Blog Integration',
     'description': """
@@ -16,6 +16,7 @@
         -------------
         * Website Builder Integration with Custom Snippets
         * SEO Optimization with JSON-LD Structured Data
+        * Dark/Light Theme Toggle with localStorage Persistence
         * Dynamic Blog/Knowledge Base with Categories
         * Responsive Design (Mobile, Tablet, Desktop)
         * Performance Optimized Assets (SCSS/JS)
@@ -91,22 +92,25 @@
         # Common Templates
         'views/templates.xml',
         'views/seo_templates.xml',
+        'views/seo_enhanced.xml',
 
         # Website Data
         'data/website_data.xml',
     ],
     'assets': {
         'web.assets_frontend': [
-            # SCSS/CSS
+            # SCSS/CSS (loaded in order: variables → mixins → main → features)
             'chaos_chaoshublk/static/src/scss/variables.scss',
             'chaos_chaoshublk/static/src/scss/mixins.scss',
             'chaos_chaoshublk/static/src/scss/chaoshub.scss',
             'chaos_chaoshublk/static/src/scss/snippets.scss',
+            'chaos_chaoshublk/static/src/scss/dark_theme.scss',
 
             # JavaScript
             'chaos_chaoshublk/static/src/js/chaoshub.js',
             'chaos_chaoshublk/static/src/js/snippets.js',
             'chaos_chaoshublk/static/src/js/newsletter.js',
+            'chaos_chaoshublk/static/src/js/theme_toggle.js',
         ],
         'website.assets_wysiwyg': [
             # Snippet options for Website Builder
