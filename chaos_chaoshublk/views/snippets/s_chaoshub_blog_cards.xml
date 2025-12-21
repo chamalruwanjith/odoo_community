@@ -24,9 +24,9 @@
                                     <span class="article-tag" t-if="post.tag_ids" t-esc="post.tag_ids[0].name"/>
                                     <span t-if="post.reading_time"><t t-esc="post.reading_time"/> min read</span>
                                 </div>
-                                <h3 class="article-title"><a t-att-href="'/article/%s' % slug(post)" t-esc="post.name"/></h3>
+                                <h3 class="article-title"><a t-att-href="'/blog/%s/post/%s' % (post.blog_id.id, post.id)" t-esc="post.name"/></h3>
                                 <p class="article-excerpt" t-esc="post.subtitle or post.teaser[:120]"/>
-                                <a t-att-href="'/article/%s' % slug(post)" class="article-link">Read More →</a>
+                                <a t-att-href="'/blog/%s/post/%s' % (post.blog_id.id, post.id)" class="article-link">Read More →</a>
                             </div>
                         </article>
                     </t>

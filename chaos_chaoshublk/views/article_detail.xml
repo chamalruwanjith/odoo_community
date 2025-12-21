@@ -1,129 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Single Article Detail Page with SEO -->
-    <template id="article_detail_page" name="Article Detail">
-        <t t-call="website.layout">
-            <t t-set="additional_title" t-value="post.name + ' | ChaosHub.lk'"/>
+    <!-- Enhance Blog Post Page with SEO -->
+    <template id="blog_post_seo_enhance" name="Blog Post SEO Enhancement" inherit_id="website_blog.blog_post_complete">
+        <xpath expr="//head" position="inside">
+            <!-- JSON-LD Structured Data for Blog Post -->
+            <t t-set="post" t-value="blog_post"/>
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "<t t-esc="post.schema_type or 'Article'"/>",
+                "headline": "<t t-esc="post.name"/>",
+                "description": "<t t-esc="post.subtitle or (post.teaser[:160] if post.teaser else '')"/>",
+                "image": "<t t-if="post.cover_properties" t-esc="website.image_url(post, 'cover_properties')"/>",
+                "datePublished": "<t t-if="post.create_date" t-esc="post.create_date.isoformat()"/>",
+                "dateModified": "<t t-if="post.write_date" t-esc="post.write_date.isoformat()"/>",
+                "author": {
+                    "@type": "Person",
+                    "name": "<t t-esc="post.author_id.name if post.author_id else 'ChaosHub Team'"/>"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "ChaosHub.lk",
+                    "url": "https://chaoshub.lk"
+                },
+                "wordCount": <t t-esc="len(post.content.split()) if post.content else 0"/>,
+                "timeRequired": "PT<t t-esc="post.reading_time"/>M"
+            }
+            </script>
+        </xpath>
 
-            <!-- SEO Meta Tags -->
-            <t t-set="meta_description" t-value="post.subtitle or (post.teaser[:160] if post.teaser else '')"/>
-            <t t-set="meta_image" t-value="website.image_url(post, 'cover_properties') if post.cover_properties else ''"/>
-
-            <!-- JSON-LD Structured Data -->
-            <script type="application/ld+json" t-raw="structured_data"/>
-
-            <div id="wrap" class="o_chaoshub_website article_detail_page">
-                <!-- Article Header -->
-                <article class="article-header" style="background: var(--gradient-dark); padding: 6rem 0 4rem;">
-                    <div class="container" style="max-width: 900px;">
-                        <!-- Categories/Tags -->
-                        <div style="margin-bottom: 1.5rem;">
-                            <t t-foreach="post.tag_ids[:3]" t-as="tag">
-                                <span class="article-tag" style="margin-right: 0.5rem;" t-esc="tag.name"/>
-                            </t>
-                        </div>
-
-                        <!-- Title -->
-                        <h1 style="color: white; font-size: 3rem; margin-bottom: 1.5rem;" t-esc="post.name"/>
-
-                        <!-- Subtitle -->
-                        <p t-if="post.subtitle" style="color: var(--color-gray-light); font-size: 1.25rem; margin-bottom: 2rem;" t-esc="post.subtitle"/>
-
-                        <!-- Meta Info -->
-                        <div class="article-meta" style="color: var(--color-gray-light);">
-                            <span t-if="post.author_id">
-                                <i class="fa fa-user"/> <t t-esc="post.author_id.name"/>
-                            </span>
-                            <span style="margin: 0 1rem;">•</span>
-                            <span>
-                                <i class="fa fa-calendar"/> <t t-esc="post.create_date.strftime('%B %d, %Y') if post.create_date else ''"/>
-                            </span>
-                            <span t-if="post.reading_time" style="margin: 0 1rem;">•</span>
-                            <span t-if="post.reading_time">
-                                <i class="fa fa-clock-o"/> <t t-esc="post.reading_time"/> min read
-                            </span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Cover Image -->
-                <div t-if="post.cover_properties" class="article-cover" style="margin-bottom: 4rem;">
-                    <div class="container" style="max-width: 1100px;">
-                        <img t-att-src="website.image_url(post, 'cover_properties')"
-                             t-att-alt="post.name"
-                             style="width: 100%; border-radius: 1rem; box-shadow: var(--shadow-2xl);"
-                             loading="lazy"/>
-                    </div>
-                </div>
-
-                <!-- Article Content -->
-                <section class="article-content section">
-                    <div class="container" style="max-width: 800px;">
-                        <div class="article-body" t-raw="post.content" style="font-size: 1.125rem; line-height: 1.8;"/>
-
-                        <!-- Article Footer -->
-                        <div class="article-footer" style="margin-top: 4rem; padding-top: 3rem; border-top: 2px solid var(--color-gray-lighter);">
-                            <!-- Tags -->
-                            <div t-if="post.tag_ids" style="margin-bottom: 2rem;">
-                                <h4>Topics:</h4>
-                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                                    <t t-foreach="post.tag_ids" t-as="tag">
-                                        <a t-att-href="'/knowledge?category=%s' % tag.name"
-                                           class="article-tag" t-esc="tag.name"/>
-                                    </t>
-                                </div>
-                            </div>
-
-                            <!-- Social Share -->
-                            <div style="margin-top: 2rem;">
-                                <h4>Share this article:</h4>
-                                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                                    <a t-attf-href="https://twitter.com/intent/tweet?url=#{request.httprequest.url}&amp;text=#{post.name}"
-                                       target="_blank" class="btn btn-secondary">
-                                        <i class="fa fa-twitter"/> Twitter
-                                    </a>
-                                    <a t-attf-href="https://www.linkedin.com/shareArticle?mini=true&amp;url=#{request.httprequest.url}&amp;title=#{post.name}"
-                                       target="_blank" class="btn btn-secondary">
-                                        <i class="fa fa-linkedin"/> LinkedIn
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Related Articles -->
-                <section class="section section-alt" t-if="related_posts">
-                    <div class="container">
-                        <h2 class="section-title text-center" style="margin-bottom: 3rem;">Related Articles</h2>
-
-                        <div class="grid grid-3">
-                            <t t-foreach="related_posts" t-as="related">
-                                <article class="article-card">
-                                    <div class="article-image">
-                                        <t t-if="related.cover_properties">
-                                            <img t-att-src="website.image_url(related, 'cover_properties')" t-att-alt="related.name" loading="lazy"/>
-                                        </t>
-                                        <t t-else="">📚</t>
-                                    </div>
-                                    <div class="article-content">
-                                        <div class="article-meta">
-                                            <span class="article-tag" t-if="related.tag_ids" t-esc="related.tag_ids[0].name"/>
-                                            <span t-if="related.reading_time"><t t-esc="related.reading_time"/> min read</span>
-                                        </div>
-                                        <h3 class="article-title" t-esc="related.name"/>
-                                        <p class="article-excerpt" t-esc="related.subtitle or (related.teaser[:120] if related.teaser else '')"/>
-                                        <a t-att-href="'/article/%s' % slug(related)" class="article-link">Read More →</a>
-                                    </div>
-                                </article>
-                            </t>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Newsletter CTA -->
-                <t t-call="chaos_chaoshublk.s_chaoshub_newsletter"/>
+        <!-- Add Reading Time to Post Header -->
+        <xpath expr="//div[@id='blog_content']//div[@class='o_blog_post_header']" position="inside">
+            <div class="o_blog_post_meta" t-if="blog_post.reading_time">
+                <i class="fa fa-clock-o"/> <t t-esc="blog_post.reading_time"/> min read
             </div>
-        </t>
+        </xpath>
     </template>
 </odoo>

@@ -5,8 +5,6 @@ import json
 from datetime import datetime
 from odoo import http
 from odoo.http import request
-from odoo.addons.website.controllers.main import Website
-from odoo.addons.http_routing.models.ir_http import slug
 
 
 class ChaosHubWebsite(http.Controller):
@@ -47,68 +45,6 @@ class ChaosHubWebsite(http.Controller):
         }
         return request.render('chaos_chaoshublk.knowledge_base_page', values)
 
-    @http.route(['/article/<model("blog.post"):post>'], type='http', auth='public', website=True, sitemap=True)
-    def article_detail(self, post, **kwargs):
-        """Single article view with SEO optimization"""
-        if not post.can_access_from_current_website():
-            raise request.not_found()
-
-        # Generate JSON-LD structured data
-        structured_data = {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": post.name,
-            "description": post.subtitle or post.teaser[:160] if post.teaser else '',
-            "image": request.website.image_url(post, 'cover_properties') if post.cover_properties else '',
-            "datePublished": post.create_date.isoformat() if post.create_date else '',
-            "dateModified": post.write_date.isoformat() if post.write_date else '',
-            "author": {
-                "@type": "Person",
-                "name": post.author_id.name if post.author_id else "ChaosHub Team"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "ChaosHub.lk",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": request.website.image_url(request.website.company_id, 'logo')
-                }
-            }
-        }
-
-        # Related articles
-        related_posts = request.env['blog.post'].sudo().search([
-            ('id', '!=', post.id),
-            ('website_published', '=', True),
-            ('tag_ids', 'in', post.tag_ids.ids)
-        ], limit=3, order='create_date desc')
-
-        values = {
-            'post': post,
-            'related_posts': related_posts,
-            'structured_data': json.dumps(structured_data),
-            'page_name': 'article',
-            'main_object': post,
-        }
-        return request.render('chaos_chaoshublk.article_detail_page', values)
-
-    @http.route(['/sitemap.xml'], type='http', auth="public", website=True, sitemap=False)
-    def sitemap_xml(self, **kwargs):
-        """Enhanced sitemap with blog posts"""
-        pages = request.website.enumerate_pages()
-
-        # Add blog posts to sitemap
-        posts = request.env['blog.post'].sudo().search([('website_published', '=', True)])
-        for post in posts:
-            loc = '/article/%s' % slug(post)
-            pages.append({
-                'loc': loc,
-                'lastmod': post.write_date.strftime('%Y-%m-%d') if post.write_date else datetime.now().strftime('%Y-%m-%d'),
-                'priority': 0.8,
-                'changefreq': 'weekly'
-            })
-
-        return request.render('website.sitemap_xml', {'pages': pages}, headers={'Content-Type': 'application/xml; charset=utf-8'})
 
 
 class NewsletterController(http.Controller):

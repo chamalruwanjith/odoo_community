@@ -54,7 +54,7 @@
                                         </div>
                                         <h3 class="article-title" t-esc="post.name"/>
                                         <p class="article-excerpt" t-esc="post.subtitle or (post.teaser[:150] if post.teaser else '')"/>
-                                        <a t-att-href="'/article/%s' % slug(post)" class="article-link">Read More →</a>
+                                        <a t-att-href="'/blog/%s/post/%s' % (post.blog_id.id, post.id)" class="article-link">Read More →</a>
                                     </div>
                                 </article>
                             </t>
