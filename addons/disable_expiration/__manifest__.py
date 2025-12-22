@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Disable Database Expiration',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.2',
     'category': 'Technical',
     'summary': 'Remove database expiration warnings and bypass social media subscription checks',
     'description': """
@@ -22,8 +22,14 @@ Features:
 
 Setup for Social Media:
 1. Get OAuth credentials from each platform (Facebook, LinkedIn, etc.)
-2. Add them to System Parameters in Settings → Technical
+2. Add them to System Parameters: Settings → Technical → Parameters → System Parameters
 3. Link your social accounts normally
+
+Example Parameters:
+- social.facebook_app_id
+- social.facebook_client_secret
+- social.linkedin_client_id
+- social.linkedin_client_secret
 
 Useful for:
 - Development databases
@@ -32,10 +38,9 @@ Useful for:
 - Using own social media API keys
     """,
     'author': 'Custom',
-    'depends': ['base', 'web', 'social'],
+    'depends': ['base', 'web'],
     'data': [
         'data/ir_cron.xml',
-        'views/res_config_settings_views.xml',
     ],
     'installable': True,
     'application': False,
