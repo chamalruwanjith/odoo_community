@@ -21,6 +21,16 @@ class IrConfigParameter(models.Model):
         IrConfigSudo.set_param('database.expiration_date', expiration_str)
         IrConfigSudo.set_param('database.expiration_reason', '')
 
+        # Enable social media features by bypassing IAP
+        # Set Facebook app credentials to enable direct OAuth (bypasses IAP)
+        IrConfigSudo.set_param('social.facebook_use_own_account', True)
+        IrConfigSudo.set_param('social.linkedin_use_own_account', True)
+        IrConfigSudo.set_param('social.twitter_use_own_account', True)
+
+        # Note: For social media to work, you need to provide your own API keys in:
+        # Settings → Technical → Parameters → System Parameters
+        # Or configure OAuth apps for each platform
+
         return True
 
     @api.model
