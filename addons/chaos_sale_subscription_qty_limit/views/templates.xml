@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add data attributes to order lines for JavaScript quantity limiting -->
+    <template id="subscription_portal_line_product_key"
+              inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//tr[@t-foreach='lines_to_report']" position="attributes">
+            <attribute name="t-att-data-line-id">line.id</attribute>
+            <attribute name="t-att-data-product-key">line.product_id.product_tmpl_id.trazet_product_key or ''</attribute>
+        </xpath>
+    </template>
+</odoo>
