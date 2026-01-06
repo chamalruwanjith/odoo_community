@@ -186,14 +186,14 @@
                 <filter name="condition_always" string="Always Execute"
                         domain="[('condition_type', '=', 'always')]"/>
                 <filter name="condition_subtasks" string="Subtasks Condition"
-                        domain="[('condition_type', 'in', ['all_subtasks_done', 'subtasks_percentage', 'no_open_subtasks'])]"/>
+                        domain="[('condition_type', 'in', ('all_subtasks_done', 'subtasks_percentage', 'no_open_subtasks'))]"/>
                 <filter name="condition_dependencies" string="Dependencies Condition"
                         domain="[('condition_type', '=', 'all_dependencies_done')]"/>
                 <separator/>
                 <filter name="action_move_stage" string="Move Stage"
-                        domain="[('action_type', 'in', ['move_stage', 'both'])]"/>
+                        domain="[('action_type', 'in', ('move_stage', 'both'))]"/>
                 <filter name="action_set_state" string="Set State"
-                        domain="[('action_type', 'in', ['set_state', 'both'])]"/>
+                        domain="[('action_type', 'in', ('set_state', 'both'))]"/>
                 <separator/>
                 <group expand="0" string="Group By">
                     <filter name="group_by_project" string="Project"
