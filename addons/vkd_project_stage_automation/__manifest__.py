@@ -43,6 +43,7 @@ from that template will inherit the rules automatically.
     'data': [
         'security/ir.model.access.csv',
         'views/project_stage_automation_views.xml',
+        'views/project_project_stage_automation_views.xml',
         'views/project_project_views.xml',
         'views/project_task_views.xml',
     ],

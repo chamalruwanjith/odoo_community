@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
 
-            <!-- Add smart button for automation rules -->
+            <!-- Add smart button for task automation rules -->
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_stage_automation_rules"
                         type="object"
@@ -16,7 +16,15 @@
                         icon="fa-magic"
                         invisible="stage_automation_count == 0">
                     <field name="stage_automation_count" widget="statinfo"
-                           string="Automation Rules"/>
+                           string="Task Automation"/>
+                </button>
+                <button name="action_view_project_stage_automation_rules"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-sitemap"
+                        invisible="project_stage_automation_count == 0">
+                    <field name="project_stage_automation_count" widget="statinfo"
+                           string="Project Automation"/>
                 </button>
             </xpath>
 

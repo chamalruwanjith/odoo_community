@@ -30,6 +30,10 @@ class ProjectTask(models.Model):
                 # IMPORTANT: Also trigger automation on parent tasks
                 # This allows subtask changes to trigger parent automation
                 self._trigger_parent_automation()
+
+                # IMPORTANT: Also trigger PROJECT-level automation
+                # This allows task changes to trigger project stage automation
+                self._trigger_project_automation()
             finally:
                 # Reset flag
                 self._automation_in_progress = False
@@ -136,6 +140,60 @@ class ProjectTask(models.Model):
                 except Exception as e:
                     _logger.error(
                         f"Stage automation: Error applying rule '{rule.name}' on parent task '{parent.name}': {str(e)}"
+                    )
+                    continue
+
+    def _trigger_project_automation(self):
+        """
+        Trigger PROJECT-level automation when tasks change.
+        This allows automating project stage changes based on task completion.
+        """
+        # Get all unique projects from current tasks
+        projects = self.mapped('project_id').filtered('has_project_stage_automation')
+
+        if not projects:
+            return
+
+        _logger.info(
+            f"Project automation: Triggering project automation for {len(projects)} project(s) "
+            f"due to task changes"
+        )
+
+        # Re-evaluate project automation rules
+        for project in projects:
+            # Get project automation rules for this project
+            rules = self.env['project.project.stage.automation'].search([
+                '|',
+                ('project_template_id', '=', project.id),
+                ('project_template_id', '=', False),  # Global rules
+                ('active', '=', True),
+            ], order='sequence, id')
+
+            if not rules:
+                continue
+
+            _logger.info(
+                f"Project automation: Checking {len(rules)} rule(s) for project '{project.name}' "
+                f"after task change"
+            )
+
+            # Apply each matching rule
+            for rule in rules:
+                try:
+                    # Check if condition is met (e.g., all_tasks_done)
+                    if rule.check_condition(project):
+                        _logger.info(
+                            f"Project automation: Condition met for rule '{rule.name}' on project, applying action"
+                        )
+                        # Apply action
+                        rule.apply_action(project)
+                    else:
+                        _logger.debug(
+                            f"Project automation: Condition not met for rule '{rule.name}' on project"
+                        )
+                except Exception as e:
+                    _logger.error(
+                        f"Project automation: Error applying rule '{rule.name}' on project '{project.name}': {str(e)}"
                     )
                     continue
 
