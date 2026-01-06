@@ -49,8 +49,7 @@ class ProjectStageAutomation(models.Model):
     trigger_stage_name = fields.Char(
         related='trigger_stage_id.name',
         string='Trigger Stage Name',
-        readonly=True,
-        store=True
+        readonly=True
     )
 
     # ==================== CONDITION ====================
@@ -93,8 +92,7 @@ class ProjectStageAutomation(models.Model):
     action_stage_name = fields.Char(
         related='action_stage_id.name',
         string='Action Stage Name',
-        readonly=True,
-        store=True
+        readonly=True
     )
 
     action_state = fields.Selection([
