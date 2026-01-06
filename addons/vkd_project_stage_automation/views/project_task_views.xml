@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Task Form View - Add button to view automation rules -->
+    <record id="project_task_view_form_inherit_automation" model="ir.ui.view">
+        <field name="name">project.task.view.form.inherit.automation</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- Add button in header to view automation rules -->
+            <xpath expr="//header" position="inside">
+                <button name="action_view_automation_rules"
+                        string="View Automation Rules"
+                        type="object"
+                        class="btn-link"
+                        invisible="not project_id"
+                        groups="project.group_project_manager"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

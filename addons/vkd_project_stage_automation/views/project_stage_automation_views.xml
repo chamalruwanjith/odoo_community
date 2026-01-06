@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="project_stage_automation_view_tree" model="ir.ui.view">
+        <field name="name">project.stage.automation.view.tree</field>
+        <field name="model">project.stage.automation</field>
+        <field name="arch" type="xml">
+            <tree string="Stage Automation Rules" default_order="project_id, sequence">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="trigger_stage_id"/>
+                <field name="condition_type"/>
+                <field name="action_type"/>
+                <field name="action_stage_id" optional="show"/>
+                <field name="execution_count" optional="hide"/>
+                <field name="last_execution_date" optional="hide"/>
+                <field name="active" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="project_stage_automation_view_form" model="ir.ui.view">
+        <field name="name">project.stage.automation.view.form</field>
+        <field name="model">project.stage.automation</field>
+        <field name="arch" type="xml">
+            <form string="Stage Automation Rule">
+                <header>
+                    <button name="action_view_stage_automation_rules"
+                            string="View All Rules"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="not project_id"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g., Auto-move to Testing when dev done"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="project_id" options="{'no_create': True}"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="execution_count"/>
+                            <field name="last_execution_date"/>
+                            <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- TRIGGER TAB -->
+                        <page name="trigger" string="⚡ Trigger">
+                            <group>
+                                <group>
+                                    <field name="trigger_stage_id"
+                                           options="{'no_create': True}"
+                                           domain="[('project_ids', '=', project_id)]"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                <p><strong>ℹ️ When does this rule trigger?</strong></p>
+                                <p>This automation rule will be evaluated when a task <strong>enters</strong> the selected stage.</p>
+                            </div>
+                        </page>
+
+                        <!-- CONDITION TAB -->
+                        <page name="condition" string="🎯 Condition">
+                            <group>
+                                <field name="condition_type" widget="radio"/>
+                                <field name="condition_value"
+                                       invisible="condition_type != 'subtasks_percentage'"
+                                       widget="percentage"/>
+                                <field name="condition_description" class="text-muted"/>
+                            </group>
+                            <div class="alert alert-warning" role="alert">
+                                <p><strong>⚠️ What condition must be met?</strong></p>
+                                <ul>
+                                    <li><strong>Always Execute:</strong> No conditions, action is performed immediately</li>
+                                    <li><strong>All Subtasks Completed:</strong> All child tasks must be Done or Cancelled</li>
+                                    <li><strong>All Dependencies Completed:</strong> All blocking tasks must be completed</li>
+                                    <li><strong>Subtasks Completion Percentage:</strong> Specified percentage of subtasks must be done</li>
+                                    <li><strong>No Open Subtasks:</strong> Task has no subtasks or all are closed</li>
+                                </ul>
+                            </div>
+                        </page>
+
+                        <!-- ACTION TAB -->
+                        <page name="action" string="🚀 Action">
+                            <group>
+                                <field name="action_type" widget="radio"/>
+                                <field name="action_stage_id"
+                                       invisible="action_type not in ('move_stage', 'both')"
+                                       options="{'no_create': True}"
+                                       domain="[('project_ids', '=', project_id)]"/>
+                                <field name="action_state"
+                                       invisible="action_type not in ('set_state', 'both')"/>
+                                <field name="action_description" class="text-muted"/>
+                            </group>
+                            <div class="alert alert-success" role="alert">
+                                <p><strong>✅ What action will be performed?</strong></p>
+                                <ul>
+                                    <li><strong>Move to Stage:</strong> Changes the task's stage (Kanban column)</li>
+                                    <li><strong>Set Task State:</strong> Changes the task's internal state</li>
+                                    <li><strong>Both:</strong> Performs both stage move and state change</li>
+                                </ul>
+                                <p class="mt-2"><em>The action will post a message in the task's chatter showing what was automated.</em></p>
+                            </div>
+                        </page>
+
+                        <!-- HELP TAB -->
+                        <page name="help" string="❓ Help">
+                            <div class="container mt-3">
+                                <h4>📚 How Stage Automation Works</h4>
+                                <p class="lead">Automatically transition tasks between stages based on conditions.</p>
+
+                                <h5 class="mt-4">🔄 Workflow Example</h5>
+                                <ol>
+                                    <li>A task enters the <strong>trigger stage</strong></li>
+                                    <li>The system checks if the <strong>condition</strong> is met</li>
+                                    <li>If yes, the <strong>action</strong> is performed automatically</li>
+                                    <li>A message is posted in the task's chatter</li>
+                                </ol>
+
+                                <h5 class="mt-4">💡 Common Use Cases</h5>
+                                <ul>
+                                    <li><strong>Development → Testing:</strong> When all dev subtasks are done, move to Testing</li>
+                                    <li><strong>Testing → Done:</strong> When all test subtasks complete, mark as Done</li>
+                                    <li><strong>Blocked → In Progress:</strong> When dependencies clear, resume work</li>
+                                    <li><strong>Review → Approved:</strong> When 100% subtasks done, mark approved</li>
+                                </ul>
+
+                                <h5 class="mt-4">🎯 Best Practices</h5>
+                                <ul>
+                                    <li>Use descriptive rule names that explain what they do</li>
+                                    <li>Set appropriate sequence for rules that might conflict</li>
+                                    <li>Test rules on a template project before deploying widely</li>
+                                    <li>Monitor execution count to see which rules are most used</li>
+                                    <li>Use "Always Execute" sparingly to avoid unintended automation</li>
+                                </ul>
+
+                                <h5 class="mt-4">🏗️ Template Support</h5>
+                                <p>
+                                    Configure automation rules on a <strong>project template</strong>, and all projects
+                                    created from that template will automatically inherit the rules. This ensures
+                                    consistency across similar projects.
+                                </p>
+
+                                <div class="alert alert-info mt-3">
+                                    <p><strong>💾 Rules are Copied with Projects</strong></p>
+                                    <p>When you duplicate a project or create a project from a template (via Sale Orders),
+                                    all automation rules are automatically copied to the new project.</p>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="project_stage_automation_view_search" model="ir.ui.view">
+        <field name="name">project.stage.automation.view.search</field>
+        <field name="model">project.stage.automation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Rule Name"/>
+                <field name="project_id" string="Project"/>
+                <field name="trigger_stage_id" string="Trigger Stage"/>
+                <separator/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name="condition_always" string="Always Execute"
+                        domain="[('condition_type', '=', 'always')]"/>
+                <filter name="condition_subtasks" string="Subtasks Condition"
+                        domain="[('condition_type', 'in', ['all_subtasks_done', 'subtasks_percentage', 'no_open_subtasks'])]"/>
+                <filter name="condition_dependencies" string="Dependencies Condition"
+                        domain="[('condition_type', '=', 'all_dependencies_done')]"/>
+                <separator/>
+                <filter name="action_move_stage" string="Move Stage"
+                        domain="[('action_type', 'in', ['move_stage', 'both'])]"/>
+                <filter name="action_set_state" string="Set State"
+                        domain="[('action_type', 'in', ['set_state', 'both'])]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_by_trigger_stage" string="Trigger Stage"
+                            context="{'group_by': 'trigger_stage_id'}"/>
+                    <filter name="group_by_condition" string="Condition Type"
+                            context="{'group_by': 'condition_type'}"/>
+                    <filter name="group_by_action" string="Action Type"
+                            context="{'group_by': 'action_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="project_stage_automation_action" model="ir.actions.act_window">
+        <field name="name">Stage Automation Rules</field>
+        <field name="res_model">project.stage.automation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first automation rule
+            </p>
+            <p>
+                Stage automation rules automatically change task stages or states based on conditions.
+                Configure rules on project templates to ensure consistency across all similar projects.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item under Project > Configuration -->
+    <menuitem id="menu_project_stage_automation"
+              name="Stage Automation"
+              parent="project.menu_project_config"
+              action="project_stage_automation_action"
+              sequence="50"/>
+
+</odoo>

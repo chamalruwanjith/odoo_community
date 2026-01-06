@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit Project Form View -->
+    <record id="project_project_view_form_inherit_automation" model="ir.ui.view">
+        <field name="name">project.project.view.form.inherit.automation</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Add smart button for automation rules -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_stage_automation_rules"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-magic"
+                        invisible="stage_automation_count == 0">
+                    <field name="stage_automation_count" widget="statinfo"
+                           string="Automation Rules"/>
+                </button>
+            </xpath>
+
+            <!-- Add Stage Automation page in notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page name="stage_automation" string="Stage Automation" groups="project.group_project_manager">
+                    <field name="has_stage_automation" invisible="1"/>
+
+                    <group>
+                        <group>
+                            <label for="stage_automation_ids" string="Automation Rules"/>
+                        </group>
+                    </group>
+
+                    <field name="stage_automation_ids" context="{'default_project_id': id}">
+                        <tree editable="bottom" default_order="sequence">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name" required="1"/>
+                            <field name="trigger_stage_id"
+                                   options="{'no_create': True}"
+                                   domain="[('project_ids', '=', parent.id)]"/>
+                            <field name="condition_type"/>
+                            <field name="condition_value"
+                                   invisible="condition_type != 'subtasks_percentage'"
+                                   widget="percentage"
+                                   optional="hide"/>
+                            <field name="action_type"/>
+                            <field name="action_stage_id"
+                                   invisible="action_type not in ('move_stage', 'both')"
+                                   options="{'no_create': True}"
+                                   domain="[('project_ids', '=', parent.id)]"
+                                   optional="show"/>
+                            <field name="action_state"
+                                   invisible="action_type not in ('set_state', 'both')"
+                                   optional="show"/>
+                            <field name="execution_count" optional="hide"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="project_id" column_invisible="1"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+
+                                <div class="oe_title">
+                                    <label for="name"/>
+                                    <h1>
+                                        <field name="name" placeholder="e.g., Auto-move to Testing when dev done"/>
+                                    </h1>
+                                </div>
+
+                                <group>
+                                    <group>
+                                        <field name="project_id" invisible="1"/>
+                                        <field name="sequence"/>
+                                        <field name="active" widget="boolean_toggle"/>
+                                    </group>
+                                    <group>
+                                        <field name="execution_count"/>
+                                        <field name="last_execution_date"/>
+                                    </group>
+                                </group>
+
+                                <notebook>
+                                    <page name="trigger" string="⚡ Trigger">
+                                        <group>
+                                            <field name="trigger_stage_id"
+                                                   options="{'no_create': True}"
+                                                   domain="[('project_ids', '=', project_id)]"/>
+                                        </group>
+                                    </page>
+
+                                    <page name="condition" string="🎯 Condition">
+                                        <group>
+                                            <field name="condition_type" widget="radio"/>
+                                            <field name="condition_value"
+                                                   invisible="condition_type != 'subtasks_percentage'"
+                                                   widget="percentage"/>
+                                            <field name="condition_description" class="text-muted"/>
+                                        </group>
+                                    </page>
+
+                                    <page name="action" string="🚀 Action">
+                                        <group>
+                                            <field name="action_type" widget="radio"/>
+                                            <field name="action_stage_id"
+                                                   invisible="action_type not in ('move_stage', 'both')"
+                                                   options="{'no_create': True}"
+                                                   domain="[('project_ids', '=', project_id)]"/>
+                                            <field name="action_state"
+                                                   invisible="action_type not in ('set_state', 'both')"/>
+                                            <field name="action_description" class="text-muted"/>
+                                        </group>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+
+                    <div class="alert alert-info mt-3" role="alert">
+                        <h5>🤖 How Stage Automation Works:</h5>
+                        <ul>
+                            <li><strong>Trigger:</strong> When a task enters a specific stage</li>
+                            <li><strong>Condition:</strong> Check if requirements are met (e.g., all subtasks done)</li>
+                            <li><strong>Action:</strong> Automatically move to another stage or set state</li>
+                        </ul>
+                        <p class="mb-0"><strong>💡 Tip:</strong> Configure automation rules on project templates. All projects created from that template will inherit these rules automatically!</p>
+                    </div>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

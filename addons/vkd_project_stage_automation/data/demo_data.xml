@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo Project Template with Automation Rules -->
+        <record id="project_template_software_dev" model="project.project">
+            <field name="name">Software Development Template</field>
+            <field name="active" eval="True"/>
+            <field name="allow_subtasks" eval="True"/>
+            <field name="allow_task_dependencies" eval="True"/>
+        </record>
+
+        <!-- Demo Stages for the Template -->
+        <record id="stage_backlog" model="project.task.type">
+            <field name="name">Backlog</field>
+            <field name="sequence">5</field>
+            <field name="fold" eval="False"/>
+            <field name="project_ids" eval="[(4, ref('project_template_software_dev'))]"/>
+        </record>
+
+        <record id="stage_design" model="project.task.type">
+            <field name="name">Design</field>
+            <field name="sequence">10</field>
+            <field name="fold" eval="False"/>
+            <field name="project_ids" eval="[(4, ref('project_template_software_dev'))]"/>
+        </record>
+
+        <record id="stage_development" model="project.task.type">
+            <field name="name">Development</field>
+            <field name="sequence">15</field>
+            <field name="fold" eval="False"/>
+            <field name="project_ids" eval="[(4, ref('project_template_software_dev'))]"/>
+        </record>
+
+        <record id="stage_testing" model="project.task.type">
+            <field name="name">Testing</field>
+            <field name="sequence">20</field>
+            <field name="fold" eval="False"/>
+            <field name="project_ids" eval="[(4, ref('project_template_software_dev'))]"/>
+        </record>
+
+        <record id="stage_done" model="project.task.type">
+            <field name="name">Done</field>
+            <field name="sequence">25</field>
+            <field name="fold" eval="True"/>
+            <field name="project_ids" eval="[(4, ref('project_template_software_dev'))]"/>
+        </record>
+
+        <!-- Demo Automation Rule 1: Design → Development when all subtasks done -->
+        <record id="automation_design_to_dev" model="project.stage.automation">
+            <field name="name">Auto-move to Development</field>
+            <field name="project_id" ref="project_template_software_dev"/>
+            <field name="sequence">10</field>
+            <field name="trigger_stage_id" ref="stage_design"/>
+            <field name="condition_type">all_subtasks_done</field>
+            <field name="action_type">move_stage</field>
+            <field name="action_stage_id" ref="stage_development"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Demo Automation Rule 2: Development → Testing when 100% subtasks done -->
+        <record id="automation_dev_to_testing" model="project.stage.automation">
+            <field name="name">Auto-move to Testing</field>
+            <field name="project_id" ref="project_template_software_dev"/>
+            <field name="sequence">20</field>
+            <field name="trigger_stage_id" ref="stage_development"/>
+            <field name="condition_type">subtasks_percentage</field>
+            <field name="condition_value">100.0</field>
+            <field name="action_type">move_stage</field>
+            <field name="action_stage_id" ref="stage_testing"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Demo Automation Rule 3: Testing → Done when all subtasks and dependencies done -->
+        <record id="automation_testing_to_done" model="project.stage.automation">
+            <field name="name">Auto-complete Task</field>
+            <field name="project_id" ref="project_template_software_dev"/>
+            <field name="sequence">30</field>
+            <field name="trigger_stage_id" ref="stage_testing"/>
+            <field name="condition_type">all_subtasks_done</field>
+            <field name="action_type">both</field>
+            <field name="action_stage_id" ref="stage_done"/>
+            <field name="action_state">1_done</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Demo Automation Rule 4: Always move from Backlog to Design -->
+        <record id="automation_backlog_to_design" model="project.stage.automation">
+            <field name="name">Auto-start Design</field>
+            <field name="project_id" ref="project_template_software_dev"/>
+            <field name="sequence">5</field>
+            <field name="trigger_stage_id" ref="stage_backlog"/>
+            <field name="condition_type">always</field>
+            <field name="action_type">move_stage</field>
+            <field name="action_stage_id" ref="stage_design"/>
+            <field name="active" eval="False"/>  <!-- Inactive by default for demo -->
+        </record>
+
+    </data>
+</odoo>
