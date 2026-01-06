@@ -14,17 +14,22 @@ class ProjectTask(models.Model):
 
     def write(self, vals):
         """
-        Override write to trigger automation rules when stage changes
+        Override write to trigger automation rules when stage or state changes
         """
         # Call parent write first
         result = super(ProjectTask, self).write(vals)
 
-        # Trigger automation only on stage change
-        if 'stage_id' in vals and not self._automation_in_progress:
+        # Trigger automation on stage change OR state change
+        if ('stage_id' in vals or 'state' in vals) and not self._automation_in_progress:
             # Set flag to prevent recursive calls
             self._automation_in_progress = True
             try:
+                # Apply automation on current task(s)
                 self._apply_stage_automation()
+
+                # IMPORTANT: Also trigger automation on parent tasks
+                # This allows subtask changes to trigger parent automation
+                self._trigger_parent_automation()
             finally:
                 # Reset flag
                 self._automation_in_progress = False
@@ -78,6 +83,60 @@ class ProjectTask(models.Model):
                         f"Stage automation: Error applying rule '{rule.name}' on task '{task.name}': {str(e)}"
                     )
                     # Continue with next rule even if one fails
+                    continue
+
+    def _trigger_parent_automation(self):
+        """
+        Trigger automation on parent tasks when subtasks change.
+        This is critical for conditions like "all_subtasks_done" to work properly.
+        """
+        # Get all unique parent tasks from current tasks
+        parent_tasks = self.mapped('parent_id').filtered(lambda p: p.project_id.has_stage_automation)
+
+        if not parent_tasks:
+            return
+
+        _logger.info(
+            f"Stage automation: Triggering parent automation for {len(parent_tasks)} parent task(s) "
+            f"due to subtask changes"
+        )
+
+        # Re-evaluate automation rules on parent tasks
+        # Use the parent's current stage as trigger
+        for parent in parent_tasks:
+            # Get automation rules for parent's current stage
+            rules = self.env['project.stage.automation'].search([
+                ('project_id', '=', parent.project_id.id),
+                ('trigger_stage_id', '=', parent.stage_id.id),
+                ('active', '=', True),
+            ], order='sequence, id')
+
+            if not rules:
+                continue
+
+            _logger.info(
+                f"Stage automation: Checking {len(rules)} rule(s) for parent task '{parent.name}' "
+                f"after subtask change"
+            )
+
+            # Apply each matching rule
+            for rule in rules:
+                try:
+                    # Check if condition is met (e.g., all_subtasks_done)
+                    if rule.check_condition(parent):
+                        _logger.info(
+                            f"Stage automation: Condition met for rule '{rule.name}' on parent task, applying action"
+                        )
+                        # Apply action
+                        rule.apply_action(parent)
+                    else:
+                        _logger.debug(
+                            f"Stage automation: Condition not met for rule '{rule.name}' on parent task"
+                        )
+                except Exception as e:
+                    _logger.error(
+                        f"Stage automation: Error applying rule '{rule.name}' on parent task '{parent.name}': {str(e)}"
+                    )
                     continue
 
     @api.model

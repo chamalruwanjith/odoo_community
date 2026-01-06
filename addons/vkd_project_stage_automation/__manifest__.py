@@ -13,11 +13,13 @@ Key Features:
 -------------
 * Configure automation rules on projects (or project templates)
 * Rules automatically copied when project is created from template
-* Multiple trigger types: stage entry
+* Multiple trigger types: stage entry, state change
 * Multiple condition types: always, all subtasks done, dependencies done, percentage
 * Multiple action types: move to stage, set state
 * Full integration with Odoo's project workflow
+* **Subtask-aware**: Automatically triggers parent task automation when subtasks change
 * Configurable per project for maximum flexibility
+* Perfect integration with vkd_sale_project_subtask module
 
 Use Cases:
 ----------
@@ -25,6 +27,7 @@ Use Cases:
 * Auto-close task when all dependencies are done
 * Move to "Review" when 100% of subtasks are complete
 * Set task state to "Done" when entering "Completed" stage
+* Parent task auto-advances when all child subtasks are complete
 
 Template Support:
 -----------------
