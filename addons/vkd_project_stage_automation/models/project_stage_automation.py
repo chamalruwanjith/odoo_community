@@ -324,3 +324,20 @@ class ProjectStageAutomation(models.Model):
             name = f"[{rule.project_id.name}] {rule.name}"
             result.append((rule.id, name))
         return result
+
+    def action_view_stage_automation_rules(self):
+        """
+        Action to view all automation rules for the same project
+        """
+        self.ensure_one()
+        return {
+            'name': _('Stage Automation Rules - %s', self.project_id.name),
+            'type': 'ir.actions.act_window',
+            'res_model': 'project.stage.automation',
+            'view_mode': 'tree,form',
+            'domain': [('project_id', '=', self.project_id.id)],
+            'context': {
+                'default_project_id': self.project_id.id,
+                'search_default_active': 1,
+            },
+        }
